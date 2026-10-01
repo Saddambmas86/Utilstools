@@ -1,19 +1,19 @@
 <!-- Footer -->
 <footer class="py-5 mt-5 border-top">  
         <div class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top">
-            <p class="mb-0">© <?= date('Y') ?> <a href="<?= $base_url ?>"
-                    class="text-decoration-none"><?= htmlspecialchars($site_name) ?></a>. All rights reserved.</p>
+            <p class="mb-0 app-footer-copyright">© <?= date('Y') ?> <a href="<?= $base_url ?>"
+                    class="text-decoration-none"><img class="wc-brand-logo" src="<?= $base_url ?>assets/img/wordscompare-mark.svg" alt=""><span class="wc-wordmark"><span>Words</span><span class="wc-wordmark-compare">Compare</span></span></a>. All rights reserved.</p>
             <ul class="list-unstyled d-flex">
-                <li class="ms-3"><a class="link-dark" href="#"><i class="fab fa-twitter"></i></a></li>
-                <li class="ms-3"><a class="link-dark" href="#"><i class="fab fa-github"></i></a></li>
-                <li class="ms-3"><a class="link-dark" href="#"><i class="fab fa-discord"></i></a></li>
+                <li class="ms-3"><a class="link-dark" href="#" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
+                <li class="ms-3"><a class="link-dark" href="#" aria-label="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a></li>
+                <li class="ms-3"><a class="link-dark" href="#" aria-label="Discord"><i class="fab fa-discord" aria-hidden="true"></i></a></li>
             </ul>
         </div>
 </footer>
 
 <!-- Scroll to Top Button -->
-<button id="scrollToTop" class="btn btn-danger scroll-to-top">
-    <i class="fas fa-arrow-up"></i>
+<button id="scrollToTop" class="btn btn-danger scroll-to-top" aria-label="Scroll to top">
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
 </button>
 
 <!-- Heavy Libraries (Deferred to footer if safe, but here we use Bootstrap only) -->

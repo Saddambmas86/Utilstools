@@ -371,7 +371,7 @@ function displayIpynbPreview(data) {
                     } else if (output.output_type === 'execute_result' && output.data && output.data['text/plain']) {
                         cellDiv.innerHTML += `<pre class="mb-0 text-primary"><code>${DOMPurify.sanitize(output.data['text/plain'].join(''))}</code></pre>`;
                     } else if (output.output_type === 'display_data' && output.data && output.data['image/png']) {
-                        cellDiv.innerHTML += `<img src="data:image/png;base64,${output.data['image/png']}" class="img-fluid my-2" alt="Output Image">`;
+                        cellDiv.innerHTML += `<img src="data:image/png;base64,${output.data['image/png']}" class="img-fluid my-2" loading="lazy" alt="Output Image">`;
                     }
                     // Add more output types as needed (e.g., text/html, image/jpeg, etc.)
                 });

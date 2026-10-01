@@ -1,38 +1,36 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JSON Viewer · Perfect Left-Aligned</title>
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+<?php
+$page_title = 'JSON Viewer';
+$page_description = 'Inspect, validate, format, and navigate JSON data with the free online JSON Viewer.';
+$page_keywords = 'JSON viewer, JSON tree, JSON formatter, JSON validator';
+include '../../includes/header.php';
+?>
     <style>
-        * {
+        .json-viewer-page *,
+        .json-viewer-page *::before,
+        .json-viewer-page *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            background: linear-gradient(135deg, #eef5f9 0%, #dce6ed 100%);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
-            padding: 12px;
+        body.app-shell > main.json-viewer-page {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            padding: 0.25rem 0.5rem 0.75rem;
         }
 
-        .main-container {
-            max-width: 100%;
+        .json-viewer-page .main-container {
             width: 100%;
-            height: 98vh;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 28px;
-            padding: 20px 24px 18px;
-            box-shadow: 0 30px 60px -20px rgba(0, 30, 40, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.6);
+            height: auto;
+            min-height: 26rem;
+            font-family: var(--wc-font-family);
+            background: var(--wc-surface);
+            border: 1px solid var(--wc-border);
+            border-radius: var(--wc-radius-lg);
+            box-shadow: var(--wc-shadow-xs);
+            color: var(--wc-text-primary);
+            padding: 12px 14px 10px;
             display: flex;
             flex-direction: column;
         }
@@ -42,55 +40,23 @@
             flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 14px;
+            margin-bottom: 8px;
             flex-shrink: 0;
         }
 
         .header h1 {
-            font-size: 24px;
+            font-size: 1rem;
             font-weight: 700;
-            letter-spacing: -0.5px;
-            color: #0b232f;
+            letter-spacing: 0;
+            color: var(--wc-text-primary);
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .header h1 i {
-            color: #1f7a7a;
+            color: var(--wc-primary);
             font-size: 26px;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .badge-btn {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(200, 215, 225, 0.3);
-            padding: 6px 14px;
-            border-radius: 40px;
-            font-size: 12px;
-            font-weight: 500;
-            color: #1b3f4e;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            cursor: default;
-            transition: all 0.2s;
-        }
-
-        .badge-btn i {
-            color: #2a7a7a;
-            font-size: 13px;
-        }
-
-        .badge-btn:hover {
-            background: white;
-            box-shadow: 0 6px 16px -8px rgba(20, 70, 90, 0.2);
         }
 
         .two-col {
@@ -98,7 +64,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 18px;
             flex: 1;
-            min-height: 0;
+            min-height: 16rem;
         }
 
         @media (max-width: 860px) {
@@ -117,7 +83,7 @@
             box-shadow: inset 0 1px 4px rgba(0,0,0,0.02);
             display: flex;
             flex-direction: column;
-            min-height: 0;
+            min-height: 16rem;
         }
 
         .panel-title {
@@ -139,17 +105,18 @@
 
         #jsonInput {
             width: 100%;
-            flex: 1;
+            flex: 1 1 auto;
             background: transparent;
             border: none;
-            resize: none;
+            resize: vertical;
+            overflow: auto;
             font-family: 'SF Mono', 'Fira Code', 'Menlo', monospace;
             font-size: 13px;
             line-height: 1.5;
             padding: 4px 2px;
             color: #0b232f;
             outline: none;
-            min-height: 0;
+            min-height: 12rem;
         }
 
         #jsonInput::placeholder {
@@ -159,15 +126,16 @@
         }
 
         .tree-output {
-            flex: 1;
+            flex: 1 1 auto;
             overflow: auto;
+            resize: vertical;
             font-family: 'SF Mono', 'Fira Code', 'Menlo', monospace;
             font-size: 12.5px;
             line-height: 1.6;
             color: #0a202b;
             padding: 4px 2px;
             cursor: default;
-            min-height: 0;
+            min-height: 12rem;
         }
 
         .tree-output::-webkit-scrollbar {
@@ -489,25 +457,44 @@
         }
 
         @media (max-width: 600px) {
-            .main-container { padding: 12px; height: 100vh; }
+            body.app-shell > main.json-viewer-page { width: min(100% - 1rem, 88rem); padding-top: 0.75rem; }
+            .json-viewer-page .main-container { padding: 9px; min-height: 0; }
             .header h1 { font-size: 20px; }
             .stats-bar { gap: 10px; }
-            .badge-btn { font-size: 11px; padding: 4px 10px; }
+        }
+
+        .json-viewer-page .header { margin-bottom: 6px; }
+        .json-viewer-page .header h1 { font-size: 0.9rem; }
+        .json-viewer-page .header h1 i { font-size: 1rem; }
+        .json-viewer-page .two-col { gap: 8px; }
+        .json-viewer-page .panel { padding: 8px 10px; border-radius: 8px; }
+        .json-viewer-page .panel-title { margin-bottom: 4px; font-size: 10px; }
+        .json-viewer-page #jsonInput { font-size: 11px; line-height: 1.4; }
+        .json-viewer-page .tree-output { font-size: 10.5px; line-height: 1.4; }
+        .json-viewer-page .tree-output .node-children { padding-left: 16px; }
+        .json-viewer-page .path-display { gap: 5px; min-height: 27px; margin-top: 4px; padding: 3px 7px; font-size: 10px; }
+        .json-viewer-page .path-display .path-label { padding: 1px 6px; font-size: 9px; }
+        .json-viewer-page .stats-bar { gap: 6px 14px; margin-bottom: 6px; padding: 5px 0; font-size: 10px; }
+        .json-viewer-page .toolbar { gap: 4px 6px; margin: 2px 0 6px; }
+        .json-viewer-page .toolbar .btn { padding: 4px 8px; border-radius: 5px; font-size: 10px; }
+        .json-viewer-page .status-bar { gap: 6px; padding-top: 5px; font-size: 10px; }
+
+        @media (max-width: 600px) {
+            body.app-shell > main.json-viewer-page { width: 100%; padding: 0.25rem 0.35rem 0.5rem; }
+            .json-viewer-page .main-container { height: auto; min-height: 0; padding: 9px; }
+            .json-viewer-page .two-col { flex: none; min-height: 0; grid-template-rows: none; grid-auto-rows: minmax(13rem, auto); }
+            .json-viewer-page .panel { min-height: 13rem; }
+            .json-viewer-page #jsonInput,
+            .json-viewer-page .tree-output { min-height: 10rem; }
+            .json-viewer-page .stats-bar { gap: 5px 9px; }
+            .json-viewer-page .toolbar .btn { padding-inline: 6px; }
         }
     </style>
-</head>
-<body>
 
+<main class="json-viewer-page">
 <div class="main-container">
     <div class="header">
         <h1><i class="fas fa-code-branch"></i> JSON VIEWER</h1>
-        <div class="header-actions">
-            <span class="badge-btn"><i class="fas fa-paste"></i> Paste</span>
-            <span class="badge-btn"><i class="fas fa-check-circle"></i> Validate</span>
-            <span class="badge-btn"><i class="fas fa-magic"></i> Format</span>
-            <span class="badge-btn"><i class="fas fa-chart-simple"></i> Analyze</span>
-            <span class="badge-btn"><i class="fas fa-download"></i> Download</span>
-        </div>
     </div>
 
     <div class="two-col">
@@ -935,5 +922,5 @@
     })();
 </script>
 
-</body>
-</html>
+</main>
+<?php include '../../includes/footer.php'; ?>

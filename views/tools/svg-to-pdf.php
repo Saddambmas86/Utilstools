@@ -116,7 +116,7 @@ include '../../includes/header.php';
                         <h5 class="mb-0"><i class="fas fa-image me-2"></i>SVG Preview</h5>
                     </div>
                     <div class="card-body text-center d-flex align-items-center justify-content-center" style="min-height: 200px; background-color: #f8f9fa;">
-                        <img id="svgPreviewImage" class="img-fluid" style="max-height: 180px; width: auto; display: none;" alt="SVG Preview">
+                        <img id="svgPreviewImage" class="img-fluid" style="max-height: 180px; width: auto; display: none;" loading="lazy" alt="SVG Preview">
                         <p id="noPreviewText" class="text-muted">Upload SVG to see preview.</p>
                     </div>
                 </div>

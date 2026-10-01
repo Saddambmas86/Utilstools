@@ -109,7 +109,7 @@ include '../../includes/header.php';
                                 <button class="btn btn-outline-secondary" type="button" id="clearImageUpload">Clear</button>
                             </div>
                             <div id="imagePreview" class="text-center mb-3 d-none">
-                                <img src="" alt="Image Preview" style="max-width: 150px; max-height: 150px; border: 1px solid #ccc;">
+                                <img src="" alt="Image Preview" loading="lazy" style="max-width: 150px; max-height: 150px; border: 1px solid #ccc;">
                             </div>
                             <div class="row g-3">
                                 <div class="col-md-6">

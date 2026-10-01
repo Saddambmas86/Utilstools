@@ -397,7 +397,7 @@ async function convertPdfToJfif() {
                 const imgWrapper = document.createElement('div');
                 imgWrapper.className = 'col-auto text-center';
                 imgWrapper.innerHTML = `
-                    <img src="${imgUrl}" class="img-thumbnail" style="max-width: 150px; max-height: 150px; object-fit: contain;" alt="Page ${pageNum}">
+                    <img src="${imgUrl}" class="img-thumbnail" style="max-width: 150px; max-height: 150px; object-fit: contain;" loading="lazy" width="150" height="150" alt="Page ${pageNum}">
                     <p class="small text-muted mt-1 mb-0">Page ${pageNum}</p>
                 `;
                 imagePreviewGrid.appendChild(imgWrapper);
@@ -682,7 +682,7 @@ function previewHistoryItem(id) {
         const imgWrapper = document.createElement('div');
         imgWrapper.className = 'col-auto text-center';
         imgWrapper.innerHTML = `
-            <img src="${blobInfo.dataUrl}" class="img-thumbnail" style="max-width: 150px; max-height: 150px; object-fit: contain;" alt="Page ${blobInfo.pageNum}">
+            <img src="${blobInfo.dataUrl}" class="img-thumbnail" style="max-width: 150px; max-height: 150px; object-fit: contain;" loading="lazy" width="150" height="150" alt="Page ${blobInfo.pageNum}">
             <p class="small text-muted mt-1 mb-0">Page ${blobInfo.pageNum}</p>
         `;
         imagePreviewGrid.appendChild(imgWrapper);

@@ -1,123 +1,132 @@
 <?php
-$page_title = "Timestamp Converter - Unix Timestamp to Date Online";
-$page_description = "Free online timestamp converter. Convert Unix timestamps to human-readable dates and vice versa. Fast, accurate, and easy to use.";
-$page_keywords = "timestamp converter, unix timestamp, date converter, developer tools, epoch converter";
+$page_title = 'JSON Formatter';
+$page_description = 'Format, minify, and validate JSON instantly in your browser.';
+$page_keywords = 'json formatter, json minifier, json validator, developer tools';
 include '../../includes/header.php';
 ?>
 
-<div class="container" style="max-width: 900px; margin-top: 30px;">
+<main class="container py-3 py-lg-4">
     <div class="row justify-content-center">
-        <div class="col-12">
-            <div class="card" style="background: rgba(255,255,255,0.85); backdrop-filter: blur(12px); border-radius: 28px; padding: 30px; box-shadow: 0 30px 60px -20px rgba(0,30,40,0.3);">
-                <h1 class="text-center mb-4"><i class="fas fa-clock" style="color: #1f7a7a;"></i> Timestamp Converter</h1>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <label><i class="fas fa-calendar"></i> Date & Time</label>
-                            <input type="datetime-local" id="dateInput" class="form-control" style="font-family: 'SF Mono', monospace; background: rgba(255,255,255,0.5); border: 1px solid rgba(200,215,225,0.3); border-radius: 12px; padding: 12px;">
-                        </div>
-                        <div class="toolbar" style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-                            <button class="btn btn-primary" onclick="toTimestamp()" style="padding: 10px 20px; border: none; border-radius: 30px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; background: #1b6f7a; color: white;"><i class="fas fa-arrow-right"></i> To Timestamp</button>
-                            <button class="btn btn-secondary" onclick="setNow()" style="padding: 10px 20px; border: none; border-radius: 30px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.6); color: #1b3f4e;"><i class="fas fa-clock"></i> Now</button>
-                        </div>
-                        <div id="timestampResult" class="result-box" style="background: rgba(255,255,255,0.5); border-radius: 12px; padding: 15px; min-height: 80px; border: 1px solid rgba(200,215,225,0.3); font-family: 'SF Mono', monospace; font-size: 14px; display: flex; align-items: center;">
-                            <span class="label" style="font-weight: 600; color: #3c6b7a; margin-right: 10px;">Timestamp:</span>
-                            <span id="timestampValue">Click "To Timestamp"</span>
+        <div class="col-12 d-lg-none mb-3">
+            <button class="btn btn-outline-primary w-100 d-flex justify-content-between align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#toolsSidebar" aria-expanded="false" aria-controls="toolsSidebar">
+                <span>Browse Tools</span><i class="fas fa-chevron-down" aria-hidden="true"></i>
+            </button>
+        </div>
+
+        <aside class="col-lg-2">
+            <div class="collapse d-lg-block" id="toolsSidebar">
+                <div class="card">
+                    <div class="card-body p-2">
+                        <label class="visually-hidden" for="searchTools">Search tools</label>
+                        <input type="search" id="searchTools" class="form-control mb-3" placeholder="Search tools...">
+                        <div class="list-group list-group-flush overflow-auto" style="max-height: min(72vh, 48rem);">
+                            <div id="toolsList"></div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="input-group">
-                            <label><i class="fas fa-hashtag"></i> Timestamp (Seconds)</label>
-                            <input type="number" id="timestampInput" placeholder="Enter timestamp (e.g., 1614556800)" class="form-control" style="font-family: 'SF Mono', monospace; background: rgba(255,255,255,0.5); border: 1px solid rgba(200,215,225,0.3); border-radius: 12px; padding: 12px;">
-                        </div>
-                        <div class="toolbar" style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-                            <button class="btn btn-primary" onclick="toDate()" style="padding: 10px 20px; border: none; border-radius: 30px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; background: #1b6f7a; color: white;"><i class="fas fa-arrow-right"></i> To Date</button>
-                            <button class="btn btn-secondary" onclick="getCurrentTimestamp()" style="padding: 10px 20px; border: none; border-radius: 30px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.6); color: #1b3f4e;"><i class="fas fa-clock"></i> Current</button>
-                        </div>
-                        <div id="dateResult" class="result-box" style="background: rgba(255,255,255,0.5); border-radius: 12px; padding: 15px; min-height: 80px; border: 1px solid rgba(200,215,225,0.3); font-family: 'SF Mono', monospace; font-size: 14px; display: flex; align-items: center;">
-                            <span class="label" style="font-weight: 600; color: #3c6b7a; margin-right: 10px;">Date:</span>
-                            <span id="dateValue">Click "To Date"</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="toolbar text-center" style="margin-top: 20px; border-top: 1px solid rgba(200,215,225,0.3); padding-top: 20px;">
-                    <button class="btn btn-secondary" onclick="copyTimestamp()" style="padding: 10px 20px; border: none; border-radius: 30px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.6); color: #1b3f4e; margin: 5px;"><i class="fas fa-copy"></i> Copy Timestamp</button>
-                    <button class="btn btn-secondary" onclick="copyDate()" style="padding: 10px 20px; border: none; border-radius: 30px; font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.6); color: #1b3f4e; margin: 5px;"><i class="fas fa-copy"></i> Copy Date</button>
                 </div>
             </div>
-        </div>
+        </aside>
+
+        <section class="col-12 col-lg-7">
+            <div class="tool-container">
+                <header>
+                    <h1><i class="fas fa-code" aria-hidden="true"></i> JSON Formatter</h1>
+                    <p class="lead">Format, minify, and validate JSON locally in your browser.</p>
+                </header>
+
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+                    <button class="btn btn-primary btn-sm" type="button" id="formatJsonBtn"><i class="fas fa-wand-magic-sparkles me-1" aria-hidden="true"></i>Format</button>
+                    <button class="btn btn-outline-primary btn-sm" type="button" id="minifyJsonBtn"><i class="fas fa-compress me-1" aria-hidden="true"></i>Minify</button>
+                    <button class="btn btn-outline-secondary btn-sm" type="button" id="validateJsonBtn"><i class="fas fa-check me-1" aria-hidden="true"></i>Validate</button>
+                    <button class="btn btn-outline-secondary btn-sm" type="button" id="copyJsonBtn"><i class="fas fa-copy me-1" aria-hidden="true"></i>Copy output</button>
+                    <button class="btn btn-outline-secondary btn-sm" type="button" id="clearJsonBtn"><i class="fas fa-eraser me-1" aria-hidden="true"></i>Clear</button>
+                    <label class="d-inline-flex align-items-center gap-2 ms-lg-auto small" for="jsonIndent">
+                        Indent
+                        <select id="jsonIndent" class="form-select form-select-sm">
+                            <option value="2" selected>2 spaces</option>
+                            <option value="4">4 spaces</option>
+                            <option value="tab">Tabs</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div id="jsonFormatterStatus" class="alert alert-info py-2 mb-3" role="status" aria-live="polite">Paste JSON to begin.</div>
+
+                <div class="row g-3 json-formatter-workspace">
+                    <div class="col-12 col-lg-6">
+                        <label for="jsonFormatterInput" class="form-label fw-semibold">Input JSON</label>
+                        <textarea id="jsonFormatterInput" class="form-control font-monospace" rows="16" spellcheck="false" placeholder='Paste JSON here, e.g. {"name":"Ada","active":true}'></textarea>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <label for="jsonFormatterOutput" class="form-label fw-semibold">Formatted output</label>
+                        <textarea id="jsonFormatterOutput" class="form-control font-monospace" rows="16" spellcheck="false" readonly placeholder="Formatted JSON will appear here"></textarea>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-</div>
+</main>
 
 <script>
-    function toTimestamp() {
-        const dateInput = document.getElementById('dateInput').value;
-        if (!dateInput) {
-            document.getElementById('timestampValue').textContent = 'Please select a date';
+document.addEventListener('DOMContentLoaded', function () {
+    const input = document.getElementById('jsonFormatterInput');
+    const output = document.getElementById('jsonFormatterOutput');
+    const status = document.getElementById('jsonFormatterStatus');
+    const indent = document.getElementById('jsonIndent');
+
+    function report(type, message) {
+        status.className = `alert alert-${type} py-2 mb-3`;
+        status.textContent = message;
+    }
+
+    function parseInput() {
+        const source = input.value.trim();
+        if (!source) throw new Error('Paste JSON into the input box first.');
+        return JSON.parse(source);
+    }
+
+    function formatJson(compact) {
+        try {
+            const parsed = parseInput();
+            const spacing = compact ? 0 : (indent.value === 'tab' ? '\t' : Number(indent.value));
+            output.value = JSON.stringify(parsed, null, spacing);
+            report('success', compact ? 'Valid JSON minified successfully.' : 'Valid JSON formatted successfully.');
+        } catch (error) {
+            report('danger', `Invalid JSON: ${error.message}`);
+        }
+    }
+
+    document.getElementById('formatJsonBtn').addEventListener('click', () => formatJson(false));
+    document.getElementById('minifyJsonBtn').addEventListener('click', () => formatJson(true));
+    document.getElementById('validateJsonBtn').addEventListener('click', () => {
+        try {
+            parseInput();
+            report('success', 'Valid JSON.');
+        } catch (error) {
+            report('danger', `Invalid JSON: ${error.message}`);
+        }
+    });
+    document.getElementById('copyJsonBtn').addEventListener('click', async () => {
+        if (!output.value) {
+            report('warning', 'Format or minify JSON before copying output.');
             return;
         }
-        const date = new Date(dateInput);
-        const timestamp = Math.floor(date.getTime() / 1000);
-        document.getElementById('timestampValue').textContent = timestamp;
-    }
-    
-    function toDate() {
-        const input = document.getElementById('timestampInput').value;
-        if (!input) {
-            document.getElementById('dateValue').textContent = 'Please enter a timestamp';
-            return;
+        try {
+            await navigator.clipboard.writeText(output.value);
+            report('success', 'Formatted output copied.');
+        } catch (error) {
+            output.focus();
+            output.select();
+            report('warning', 'Clipboard access is unavailable. Select the output and copy it manually.');
         }
-        const timestamp = parseInt(input);
-        if (isNaN(timestamp)) {
-            document.getElementById('dateValue').textContent = 'Invalid timestamp';
-            return;
-        }
-        const date = new Date(timestamp * 1000);
-        document.getElementById('dateValue').textContent = date.toLocaleString('en-US', {
-            year: 'numeric', month: '2-digit', day: '2-digit',
-            hour: '2-digit', minute: '2-digit', second: '2-digit',
-            hour12: false
-        });
-    }
-    
-    function setNow() {
-        const now = new Date();
-        const iso = now.toISOString().slice(0, 16);
-        document.getElementById('dateInput').value = iso;
-        toTimestamp();
-    }
-    
-    function getCurrentTimestamp() {
-        const now = Math.floor(Date.now() / 1000);
-        document.getElementById('timestampInput').value = now;
-        toDate();
-    }
-    
-    function copyTimestamp() {
-        const value = document.getElementById('timestampValue').textContent;
-        if (value && value !== 'Click "To Timestamp"' && value !== 'Please select a date') {
-            navigator.clipboard.writeText(value).then(() => {
-                alert('Timestamp copied!');
-            });
-        }
-    }
-    
-    function copyDate() {
-        const value = document.getElementById('dateValue').textContent;
-        if (value && value !== 'Click "To Date"' && value !== 'Please enter a timestamp' && value !== 'Invalid timestamp') {
-            navigator.clipboard.writeText(value).then(() => {
-                alert('Date copied!');
-            });
-        }
-    }
-    
-    // Auto-convert on input change
-    document.getElementById('dateInput').addEventListener('change', toTimestamp);
-    document.getElementById('timestampInput').addEventListener('change', toDate);
-    
-    // Set current time on load
-    setNow();
-    getCurrentTimestamp();
+    });
+    document.getElementById('clearJsonBtn').addEventListener('click', () => {
+        input.value = '';
+        output.value = '';
+        report('info', 'Paste JSON to begin.');
+        input.focus();
+    });
+});
 </script>
 
 <?php include '../../includes/toolsfooter.php'; ?>

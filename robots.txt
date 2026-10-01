@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /views/
+Disallow: /includes/
+Disallow: /tmp/
+Disallow: /test_pdf/
+Disallow: /vendor/
+Allow: /
+
+Sitemap: /sitemap.xml
+User-agent: *
+Allow: /
+
+Sitemap: https://www.wordscompare.com/sitemap.xml

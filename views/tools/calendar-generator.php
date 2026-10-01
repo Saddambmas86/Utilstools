@@ -777,7 +777,7 @@ function generateYearAtAGlance(year, holidays, theme, showHolidayNames, compactV
             <div class="calendar-header">
                 <h2>${year} Calendar</h2>
                 <p>${companyName ? companyName : 'Your Annual Calendar'}</p>
-                ${logoUrl ? `<div class="company-info"><img src="${logoUrl}" alt="${companyName || 'Company'} Logo" onerror="this.style.display='none'"><span>${companyName}</span></div>` : ''}
+                ${logoUrl ? `<div class="company-info"><img src="${logoUrl}" alt="${companyName || 'Company'} Logo" loading="lazy" onerror="this.style.display='none'"><span>${companyName}</span></div>` : ''}
             </div>
             <div class="months-grid">
     `;
@@ -967,7 +967,7 @@ function generateMonthlyCalendar(year, holidays, theme, showHolidayNames, compac
             <div class="calendar-header-monthly">
                 <h2>${year} Calendar</h2>
                 <p>${companyName ? companyName : 'Monthly Calendar'}</p>
-                ${logoUrl ? `<div class="company-info-monthly"><img src="${logoUrl}" alt="${companyName || 'Company'} Logo" onerror="this.style.display='none'"><span>${companyName}</span></div>` : ''}
+                ${logoUrl ? `<div class="company-info-monthly"><img src="${logoUrl}" alt="${companyName || 'Company'} Logo" loading="lazy" onerror="this.style.display='none'"><span>${companyName}</span></div>` : ''}
             </div>
     `;
 
@@ -1161,7 +1161,7 @@ function generateGridView(year, holidays, theme, showHolidayNames, compactView, 
             <div class="calendar-header-grid">
                 <h2>${year} Annual Grid Calendar</h2>
                 <p>${companyName ? companyName : 'Compact Calendar View'}</p>
-                ${logoUrl ? `<div class="company-info-grid"><img src="${logoUrl}" alt="${companyName || 'Company'} Logo" onerror="this.style.display='none'"><span>${companyName}</span></div>` : ''}
+                ${logoUrl ? `<div class="company-info-grid"><img src="${logoUrl}" alt="${companyName || 'Company'} Logo" loading="lazy" onerror="this.style.display='none'"><span>${companyName}</span></div>` : ''}
             </div>
             <div class="months-grid-all">
     `;

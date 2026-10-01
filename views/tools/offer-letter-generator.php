@@ -429,7 +429,7 @@ function generateLetterHtml(data) {
             `;
             letterContent = `
                 <div class="offer-letter-standard">
-                    ${data.companyLogoUrl ? `<img src="${data.companyLogoUrl}" alt="${data.companyName} Logo" class="company-logo" onerror="this.style.display='none'">` : ''}
+                    ${data.companyLogoUrl ? `<img src="${data.companyLogoUrl}" alt="${data.companyName} Logo" class="company-logo" loading="lazy" onerror="this.style.display='none'">` : ''}
                     <div class="header-info">
                         <strong>${data.companyName}</strong><br>
                         ${data.companyAddress}<br>
@@ -494,7 +494,7 @@ function generateLetterHtml(data) {
             letterContent = `
                 <div class="offer-letter-executive">
                     <div class="company-header">
-                        ${data.companyLogoUrl ? `<img src="${data.companyLogoUrl}" alt="${data.companyName} Logo" onerror="this.style.display='none'">` : ''}
+                        ${data.companyLogoUrl ? `<img src="${data.companyLogoUrl}" alt="${data.companyName} Logo" loading="lazy" onerror="this.style.display='none'">` : ''}
                         <h1>${data.companyName}</h1>
                         <div class="address">${data.companyAddress}</div>
                     </div>
@@ -567,7 +567,7 @@ function generateLetterHtml(data) {
             letterContent = `
                 <div class="offer-letter-modern">
                     <div class="header">
-                        ${data.companyLogoUrl ? `<img src="${data.companyLogoUrl}" alt="${data.companyName} Logo" class="company-logo" onerror="this.style.display='none'">` : ''}
+                        ${data.companyLogoUrl ? `<img src="${data.companyLogoUrl}" alt="${data.companyName} Logo" class="company-logo" loading="lazy" onerror="this.style.display='none'">` : ''}
                         <h1>${data.companyName}</h1>
                         <div class="tagline">${data.companyAddress}</div>
                     </div>
@@ -645,7 +645,7 @@ function generateLetterHtml(data) {
             letterContent = `
                 <div class="offer-letter-minimal">
                     <div class="header-minimal">
-                        ${data.companyLogoUrl ? `<img src="${data.companyLogoUrl}" alt="${data.companyName} Logo" class="company-logo" onerror="this.style.display='none'">` : ''}
+                        ${data.companyLogoUrl ? `<img src="${data.companyLogoUrl}" alt="${data.companyName} Logo" class="company-logo" loading="lazy" onerror="this.style.display='none'">` : ''}
                         <h1>OFFER LETTER</h1>
                         <p>${data.companyName} | ${data.companyAddress}</p>
                     </div>

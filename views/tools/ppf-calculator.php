@@ -56,7 +56,7 @@ include '../../includes/header.php';
                                 <div>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <label for="annual-investment" class="form-label mb-1">Annual Investment</label>
-                                        <div class="d-flex align-items-center"> <?php /* Added currency select wrapper */ ?>
+                                        <div class="d-flex align-items-center">
                                             <select id="currency-select" class="form-select form-select-sm me-2">
                                                 <option value="USD" selected>$ (USD)</option>
                                                 <option value="EUR">EUR (€)</option>
@@ -110,15 +110,15 @@ include '../../includes/header.php';
                         </div>
                         <div class="text-center">
                             <p class="h5 text-gray-600">Maturity Amount</p>
-                            <p id="maturity-amount-result" class="display-6 fw-bold text-gray-800 mb-3">0</p> <?php /* Removed fixed '₹' */ ?>
+                            <p id="maturity-amount-result" class="display-6 fw-bold text-gray-800 mb-3">0</p>
                             <div class="d-flex justify-content-center gap-4">
                                 <div class="text-start">
                                     <p class="small text-gray-500">Total Investment</p>
-                                    <p id="total-investment-result" class="h4 fw-semibold text-primary">0</p> <?php /* Removed fixed '₹' */ ?>
+                                    <p id="total-investment-result" class="h4 fw-semibold text-primary">0</p>
                                 </div>
                                 <div class="text-start">
                                     <p class="small text-gray-500">Total Interest Earned</p>
-                                    <p id="total-interest-earned-result" class="h4 fw-semibold text-gray-800">0</p> <?php /* Removed fixed '₹' */ ?>
+                                    <p id="total-interest-earned-result" class="h4 fw-semibold text-gray-800">0</p>
                                 </div>
                             </div>
                         </div>
@@ -147,10 +147,6 @@ include '../../includes/header.php';
 
             </main>
         </div>
-
-    <div class="col-lg-2 border shadow-sm sticky-top vh-100 p-3">
-        
-    </div>
 
     </div>
 </div>

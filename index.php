@@ -7,26 +7,6 @@ include 'includes/header.php';
 
 ?>
 
-<!-- <meta property="og:title" content="<?php echo htmlspecialchars($pageTitle); ?>">
-<meta property="og:description" content="<?php echo htmlspecialchars($pageDescription); ?>">
-<meta property="og:type" content="website">
-<meta property="og:url" content="<?php echo htmlspecialchars($pageUrl); ?>">
-<meta property="og:site_name" content="Free Online Tools">
-<meta property="og:locale" content="en_US">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630"> -->
-
-<!-- Hero Section -->
-<section class="hero-section py-3" style="background: #ffffff; border-bottom: 1px solid #e9ecef;">
-    <div class="container px-3 text-center">
-        <h1 class="display-5 fw-bold mb-2" style="color: #111111; letter-spacing: -0.5px;">Wordscompare one platform.
-            Endless tools <span class="emoji">🛠️</span></h1>
-        <p class="mb-0 mx-auto" style="max-width: 800px; color: #555555; line-height: 1.7; font-size: 1rem;">
-            WordsCompare is a free
-            online toolkit with 100+ browser-based tools including PDF converters, calculators, QR code generator, file
-            converters, and code formatters</p>
-    </div>
-</section>
 
 <!-- AdSense Test Ad: Responsive (test mode) -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2923840482782912"
@@ -42,904 +22,611 @@ include 'includes/header.php';
     gtag('config', 'G-ZVG71163ZG');
 </script>
 
-<link rel="stylesheet" href="assets/css/homepage.css">
+<main class="container-fluid my-1 px-0 home-page-shell">
+    <?php
+    $categoryCards = [
+        ['title' => 'Developer', 'description' => 'JSON, Encoding, JWT, Code, URLs and more', 'url' => $base_url . 'developer-tools', 'icon' => 'fa-code', 'accent' => 'developer'],
+        ['title' => 'QA & Testing', 'description' => 'JSON Diff, Validation, Test Data, Regex and more', 'url' => $base_url . 'qa-tools', 'icon' => 'fa-vial', 'accent' => 'qa'],
+        ['title' => 'API Testing', 'description' => 'API Tools, Responses, Headers, Auth and more', 'url' => $base_url . 'api-testing-tools', 'icon' => 'fa-plug', 'accent' => 'api'],
+        ['title' => 'DevOps', 'description' => 'YAML, Cron, Environment, Conversion and more', 'url' => $base_url . 'devops-tools', 'icon' => 'fa-server', 'accent' => 'devops'],
+        ['title' => 'PDF Tools', 'description' => 'Convert, Merge, Split, Compress, OCR and more', 'url' => $base_url . 'pdf-tools', 'icon' => 'fa-file-pdf', 'accent' => 'pdf'],
+        ['title' => 'Text Tools', 'description' => 'Compare, Count, Clean, Transform and more', 'url' => $base_url . 'text-tools', 'icon' => 'fa-file-alt', 'accent' => 'text'],
+        ['title' => 'Calculators', 'description' => 'Finance, Math, Date, Percentage and more', 'url' => $base_url . 'calculators', 'icon' => 'fa-calculator', 'accent' => 'calc'],
+        ['title' => 'Web Tools', 'description' => 'SEO, Domains, URLs, Converters and more', 'url' => $base_url . 'developer-tools', 'icon' => 'fa-globe', 'accent' => 'web'],
+        ['title' => 'Security', 'description' => 'Hash, Token, Encode, Decode and more', 'url' => $base_url . 'developer-tools', 'icon' => 'fa-shield-alt', 'accent' => 'security'],
+    ];
 
-<!-- Category Navigation (Pills) -->
-<nav class="category-nav-wrapper shadow-sm sticky-top"
-    style="top: 56px; background: #ffffff; z-index: 1020; border-bottom: 1px solid #e9ecef;">
-    <div class="container py-2 py-md-3">
-        <ul class="nav nav-pills flex-wrap justify-content-center" style="gap: 8px; padding-bottom: 4px;">
-            <li class="nav-item">
-                <a class="nav-link active rounded-pill px-4 fw-bold shadow-sm" style="background:#dc3545; color:white;"
-                    href="#">All</a>
-            </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link rounded-pill px-4 border text-dark fw-bold"
-                    style="border-color:#e0e0e0; background: #f8f9fa;" href="#trending-tools">Trending</a>
-            </li> -->
-            <li class="nav-item">
-                <a class="nav-link rounded-pill px-4 border text-dark fw-medium" style="border-color:#d1d1d1;"
-                    href="#pdf-editor-tools">PDF Editor</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link rounded-pill px-4 border text-dark fw-medium" style="border-color:#d1d1d1;"
-                    href="#pdf-conversions">PDF Conversions</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link rounded-pill px-4 border text-dark fw-medium" style="border-color:#d1d1d1;"
-                    href="#text-tools">Text Tools</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link rounded-pill px-4 border text-dark fw-medium" style="border-color:#d1d1d1;"
-                    href="#business-tools">Business</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link rounded-pill px-4 border text-dark fw-medium" style="border-color:#d1d1d1;"
-                    href="#developer-tools">Developer Tools</a>
-            </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link rounded-pill px-4 border text-dark fw-medium" style="border-color:#d1d1d1;"
-                    href="#web-tools">Web</a>
-            </li> -->
-            <li class="nav-item">
-                <a class="nav-link rounded-pill px-4 border text-dark fw-medium" style="border-color:#d1d1d1;"
-                    href="#calculators">Calculators</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-<style>
-    .hide-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
+    $developerTools = [
+        ['title' => 'JSON Formatter', 'description' => 'Format and validate JSON payloads.', 'url' => $base_url . 'json-formatter', 'icon' => 'fa-code'],
+        ['title' => 'JSON Viewer', 'description' => 'Browse structured JSON content clearly.', 'url' => $base_url . 'json-viewer', 'icon' => 'fa-eye'],
+        ['title' => 'Base64 Encoder', 'description' => 'Encode and decode Base64 values.', 'url' => $base_url . 'base64-encoder', 'icon' => 'fa-lock'],
+        ['title' => 'URL Encoder', 'description' => 'Encode and decode URL-safe strings.', 'url' => $base_url . 'url-encoder', 'icon' => 'fa-link'],
+        ['title' => 'Hash Generator', 'description' => 'Create MD5, SHA and other hashes.', 'url' => $base_url . 'hash-generator', 'icon' => 'fa-fingerprint'],
+        ['title' => 'JWT Decoder', 'description' => 'Inspect JWT headers and payloads.', 'url' => $base_url . 'jwt-decoder', 'icon' => 'fa-key'],
+    ];
 
-    .hide-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
+    $qaTools = [
+        ['title' => 'Text Compare', 'description' => 'Compare text blocks and spot differences.', 'url' => $base_url . 'text-comparison', 'icon' => 'fa-code-branch'],
+        ['title' => 'Word Counter', 'description' => 'Check word and character counts quickly.', 'url' => $base_url . 'word-counter', 'icon' => 'fa-font'],
+        ['title' => 'Find & Replace Text', 'description' => 'Find and replace repeated text values.', 'url' => $base_url . 'find-replace-text', 'icon' => 'fa-search'],
+        ['title' => 'Case Converter', 'description' => 'Convert text to sentence, title, and lower case.', 'url' => $base_url . 'case-converter', 'icon' => 'fa-text-height'],
+        ['title' => 'JSON Viewer', 'description' => 'Inspect JSON output and response payloads.', 'url' => $base_url . 'json-viewer', 'icon' => 'fa-eye'],
+        ['title' => 'Remove Extra Spaces', 'description' => 'Clean up formatting and white space issues.', 'url' => $base_url . 'remove-extra-spaces', 'icon' => 'fa-eraser'],
+    ];
 
-    .category-nav-wrapper .nav-link {
-        transition: all 0.2s ease;
-    }
+    $apiTools = [
+        ['title' => 'JSON Formatter', 'description' => 'Format API JSON responses clearly.', 'url' => $base_url . 'json-formatter', 'icon' => 'fa-code'],
+        ['title' => 'JSON Viewer', 'description' => 'Inspect structured API payloads.', 'url' => $base_url . 'json-viewer', 'icon' => 'fa-eye'],
+        ['title' => 'JWT Decoder', 'description' => 'Decode and validate JWT tokens.', 'url' => $base_url . 'jwt-decoder', 'icon' => 'fa-key'],
+        ['title' => 'Base64 Encoder', 'description' => 'Encode Base64 payloads in the browser.', 'url' => $base_url . 'base64-encoder', 'icon' => 'fa-lock'],
+        ['title' => 'URL Encoder', 'description' => 'Prepare request values for APIs and URLs.', 'url' => $base_url . 'url-encoder', 'icon' => 'fa-link'],
+        ['title' => 'Hash Generator', 'description' => 'Generate hash values for verification.', 'url' => $base_url . 'hash-generator', 'icon' => 'fa-fingerprint'],
+    ];
 
-    .category-nav-wrapper .nav-link:not(.active):hover {
-        background-color: #f0f0f0;
-        border-color: #2d2d32 !important;
-        color: #000 !important;
-    }
-</style>
+    $devopsTools = [
+        ['title' => 'Hash Generator', 'description' => 'Create hashes for integrity checks.', 'url' => $base_url . 'hash-generator', 'icon' => 'fa-fingerprint'],
+        ['title' => 'Base64 Encoder', 'description' => 'Work with values used in configs and services.', 'url' => $base_url . 'base64-encoder', 'icon' => 'fa-lock'],
+        ['title' => 'URL Encoder', 'description' => 'Handle encoded URL query values safely.', 'url' => $base_url . 'url-encoder', 'icon' => 'fa-link'],
+        ['title' => 'JSON Formatter', 'description' => 'Normalize JSON for deployment payloads.', 'url' => $base_url . 'json-formatter', 'icon' => 'fa-code'],
+        ['title' => 'JSON Viewer', 'description' => 'Read payloads and objects in structured form.', 'url' => $base_url . 'json-viewer', 'icon' => 'fa-eye'],
+        ['title' => 'JWT Decoder', 'description' => 'Inspect auth tokens used in services.', 'url' => $base_url . 'jwt-decoder', 'icon' => 'fa-key'],
+    ];
 
-<main class="container-fluid my-1 px-0">
+    $textTools = [
+        ['title' => 'Case Converter', 'description' => 'Change casing for clean text output.', 'url' => $base_url . 'case-converter', 'icon' => 'fa-text-height'],
+        ['title' => 'Remove Extra Spaces', 'description' => 'Clean white space and formatting noise.', 'url' => $base_url . 'remove-extra-spaces', 'icon' => 'fa-eraser'],
+        ['title' => 'Text Compare', 'description' => 'Compare content and review changes.', 'url' => $base_url . 'text-comparison', 'icon' => 'fa-code-branch'],
+        ['title' => 'Word Counter', 'description' => 'Review counts and text stats instantly.', 'url' => $base_url . 'word-counter', 'icon' => 'fa-font'],
+        ['title' => 'Find & Replace Text', 'description' => 'Update repeated values across content.', 'url' => $base_url . 'find-replace-text', 'icon' => 'fa-search'],
+        ['title' => 'Text to Slug', 'description' => 'Convert names into URL-friendly slugs.', 'url' => $base_url . 'text-to-slug', 'icon' => 'fa-link'],
+    ];
 
-    <?php $brandIcons = ['fa-html5', 'fa-dev', 'fa-whatsapp', 'fa-facebook']; ?>
+    $pdfTools = [
+        ['title' => 'Compress PDF', 'description' => 'Reduce PDF size quickly.', 'url' => $base_url . 'compress-pdf', 'icon' => 'fa-file-pdf'],
+        ['title' => 'Merge PDF', 'description' => 'Combine multiple PDFs into one.', 'url' => $base_url . 'merge-pdf', 'icon' => 'fa-object-group'],
+        ['title' => 'Split PDF', 'description' => 'Separate a PDF into smaller files.', 'url' => $base_url . 'split-pdf', 'icon' => 'fa-scissors'],
+        ['title' => 'Add Watermark to PDF', 'description' => 'Apply a watermark to your document.', 'url' => $base_url . 'add-watermark-to-pdf', 'icon' => 'fa-water'],
+        ['title' => 'PDF to Word', 'description' => 'Convert PDF files to Word format.', 'url' => $base_url . 'pdf-to-word', 'icon' => 'fa-file-word'],
+        ['title' => 'PDF to JSON', 'description' => 'Extract structured content from PDF to JSON.', 'url' => $base_url . 'pdf-to-json', 'icon' => 'fa-file-code'],
+    ];
 
-    <!-- Trending Tools Section
-    <section class="tools-section bg-light py-4" id="trending-tools">
-        <div class="container">
-            <h2 class="mb-5">Trending Tools <span class="emoji">🔥</span></h2>
-            <div class="tools-grid">
-                <?php
-                $trendingTools = [
-                    ['title' => 'EId Wishes card generator', 'description' => 'Generate beautiful Eid Mubarak wishes cards with name and photo.', 'icon' => 'fa-moon', 'color' => 'text-warning', 'url' => 'https://prophetstories.in/'],
-                    ['title' => 'Text Compare', 'description' => 'Compare two texts side-by-side and highlight differences instantly.', 'icon' => 'fa-file-alt', 'color' => 'text-info', 'slug' => 'text-comparison'],
-                ];
-                foreach ($trendingTools as $tool) {
-                    $iconPrefix = in_array($tool['icon'], $brandIcons) ? 'fab' : 'fas';
-                    $url = isset($tool['url']) ? $tool['url'] : $base_url . $tool['slug'];
-                    echo '<div><a href="' . $url . '" class="card-link"><div class="card tool-card h-100"><div class="card-body"><i class="' . $iconPrefix . ' ' . $tool['icon'] . ' ' . $tool['color'] . '"></i><h3 class="card-title h5">' . $tool['title'] . '</h3><p class="card-text">' . $tool['description'] . '</p></div></div></a></div>';
-                }
-                ?>
-            </div>
-        </div>
-    </section> -->
+    $calculatorTools = [
+        ['title' => 'EMI Calculator', 'description' => 'Estimate monthly loan repayments.', 'url' => $base_url . 'emi-calculator', 'icon' => 'fa-calculator'],
+        ['title' => 'GST Calculator', 'description' => 'Calculate GST on product values.', 'url' => $base_url . 'gst-calculator', 'icon' => 'fa-receipt'],
+        ['title' => 'Compound Interest', 'description' => 'Model investment growth with compounding.', 'url' => $base_url . 'compound-interest-calculator', 'icon' => 'fa-chart-line'],
+        ['title' => 'BMI Calculator', 'description' => 'Check body mass index quickly.', 'url' => $base_url . 'bmi-calculator', 'icon' => 'fa-heartbeat'],
+        ['title' => 'Age Calculator', 'description' => 'Calculate age from date of birth.', 'url' => $base_url . 'age-calculator', 'icon' => 'fa-user-clock'],
+        ['title' => 'Unit Converter', 'description' => 'Convert units for everyday work.', 'url' => $base_url . 'unit-converter', 'icon' => 'fa-arrows-alt'],
+    ];
 
-    
+    $guideCards = [
+        ['title' => 'Developer tools', 'description' => 'Format, encode and validate data in your browser.', 'url' => $base_url . 'developer-tools'],
+        ['title' => 'QA & Testing tools', 'description' => 'Compare content, inspect output and review changes.', 'url' => $base_url . 'qa-tools'],
+        ['title' => 'PDF tools', 'description' => 'Edit, compress and convert PDFs without installing software.', 'url' => $base_url . 'pdf-tools'],
+    ];
+    ?>
 
-    <!-- Developer Tools Section -->
-    <section class="tools-section bg-white" id="developer-tools">
-        <div class="container">
-            <h2 class="mb-5">Developer Tools <span class="emoji">👨‍</span></h2>
-            <div class="tools-grid">
-                <?php
-                $devTools = [
-                    ['title' => 'Text Compare', 'description' => 'Compare texts.', 'icon' => 'fa-file-alt', 'color' => 'text-info', 'slug' => 'text-comparison'],
-                    ['title' => 'Time Stamp', 'description' => 'Convert between Unix timestamp and human-readable date', 'icon' => 'fa-clock', 'color' => 'text-warning', 'slug' => 'json-formatter'],
-                    ['title' => 'Base64 Encoder', 'description' => 'Encode/Decode Base64.', 'icon' => 'fa-lock', 'color' => 'text-success', 'slug' => 'base64-encoder'],
-                    ['title' => 'URL Encoder', 'description' => 'Safely Encode/Decode URLs.', 'icon' => 'fa-link', 'color' => 'text-primary', 'slug' => 'url-encoder'],
-                    ['title' => 'Hash Generator', 'description' => 'Generate MD5, SHA-1 etc.', 'icon' => 'fa-fingerprint', 'color' => 'text-info', 'slug' => 'hash-generator'],
-                    ['title' => 'JWT Decoder', 'description' => 'Decode and view JWT claims.', 'icon' => 'fa-key', 'color' => 'text-danger', 'slug' => 'jwt-decoder'],
-                    ['title' => 'JSON Viewer', 'description' => 'View and analyze JSON with syntax highlighting.', 'icon' => 'fa-eye', 'color' => 'text-secondary', 'slug' => 'json-viewer'],
-                    ['title' => 'Password Generator', 'description' => 'Create passwords.', 'icon' => 'fa-lock', 'color' => 'text-success', 'slug' => 'password-generator'],
-                    ['title' => 'QR Code Generator', 'description' => 'Create QR codes.', 'icon' => 'fa-qrcode', 'color' => 'text-purple', 'slug' => 'qr-code-generator'],
-                    ['title' => 'Color Picker', 'description' => 'Pick colors.', 'icon' => 'fa-palette', 'color' => 'text-info', 'slug' => 'color-picker'],
-                    ];
+    <section class="hero-section app-hero-section">
+        <div class="container hero-shell">
+            <div class="row align-items-center g-4 g-lg-5">
+                <div class="col-lg-6">
+                    <div class="hero-copy">
+                        <span class="hero-badge">100+ Free Tools</span>
+                        <h1 class="hero-title">Developer &amp; QA tools<br>made <span class="gradient-text">simple.</span></h1>
+                        <p class="hero-subtitle">Format, compare, validate, convert and generate data instantly in your browser. No signup. No limits.</p>
 
-                foreach ($devTools as $tool) {
-                    $iconPrefix = in_array($tool['icon'], $brandIcons) ? 'fab' : 'fas';
-                    echo '<div><a href="' . $base_url . $tool['slug'] . '" class="card-link"><div class="card tool-card h-100"><div class="card-body"><i class="' . $iconPrefix . ' ' . $tool['icon'] . ' ' . $tool['color'] . '"></i><h3 class="card-title h5">' . $tool['title'] . '</h3><p class="card-text">' . $tool['description'] . '</p></div></div></a></div>';
-                }
-                ?>
-            </div>
-        </div>
-    </section>
+                        <div class="hero-search-wrap">
+                            <button id="global-search-trigger" class="hero-search-btn" type="button" data-wc-search aria-label="Open search (Ctrl/Cmd+K)" aria-expanded="false">
+                                <span class="hero-search-icon"><i class="fas fa-search" aria-hidden="true"></i></span>
+                                <span class="hero-search-label">Search 100+ tools...</span>
+                                <span class="hero-search-shortcut">⌘ K</span>
+                            </button>
+                        </div>
 
-    <!-- PDF Editor Tools Section -->
-    <section class="tools-section bg-white py-4" id="pdf-editor-tools">
-        <div class="container">
-            <h2 class="mb-5 mt-4">PDF Editor & Manipulation <span class="emoji">🛠️</span></h2>
-            <div class="tools-grid">
-                <?php
-                $pdfEditorTools = [
-                    [
-                        'title' => 'PDF Metadata Editor',
-                        'description' => 'Edit metadata information in your PDF files.',
-                        'icon' => 'fa-edit',
-                        'color' => 'text-primary',
-                        'slug' => 'pdf-metadata-editor'
-                    ],
-                    [
-                        'title' => 'Add Page Number to PDF',
-                        'description' => 'Add page numbers to your PDF documents.',
-                        'icon' => 'fa-sort-numeric-down',
-                        'color' => 'text-primary',
-                        'slug' => 'add-page-number-to-pdf'
-                    ],
-                    [
-                        'title' => 'Add Watermark to PDF',
-                        'description' => 'Add text or image watermarks to PDF.',
-                        'icon' => 'fa-tint',
-                        'color' => 'text-info',
-                        'slug' => 'add-watermark-to-pdf'
-                    ],
-                    [
-                        'title' => 'Delete PDF Pages',
-                        'description' => 'Remove unwanted pages from your PDF files.',
-                        'icon' => 'fa-trash-alt',
-                        'color' => 'text-danger',
-                        'slug' => 'delete-pdf-pages'
-                    ],
-                    [
-                        'title' => 'Repair PDF',
-                        'description' => 'Repair corrupted or damaged PDF documents.',
-                        'icon' => 'fa-tools',
-                        'color' => 'text-info',
-                        'slug' => 'repair-pdf'
-                    ],
-                    [
-                        'title' => 'PDF to OCR',
-                        'description' => 'Perform Optical Character Recognition on PDFs.',
-                        'icon' => 'fa-font',
-                        'color' => 'text-purple',
-                        'slug' => 'pdf-to-ocr'
-                    ],
-                    [
-                        'title' => 'Lock PDF',
-                        'description' => 'Secure your PDF files with a password.',
-                        'icon' => 'fa-lock',
-                        'color' => 'text-danger',
-                        'slug' => 'lock-pdf'
-                    ],
-                    [
-                        'title' => 'Reorder PDF Pages',
-                        'description' => 'Change the order of pages in your PDF.',
-                        'icon' => 'fa-sort',
-                        'color' => 'text-primary',
-                        'slug' => 'reorder-pdf-pages'
-                    ],
-                    [
-                        'title' => 'Merge PDF',
-                        'description' => 'Combine multiple PDFs into a single file.',
-                        'icon' => 'fa-object-group',
-                        'color' => 'text-success',
-                        'slug' => 'merge-pdf'
-                    ],
-                    [
-                        'title' => 'PDF to Audio',
-                        'description' => 'Convert PDF text into audio format.',
-                        'icon' => 'fa-volume-up',
-                        'color' => 'text-info',
-                        'slug' => 'pdf-to-audio'
-                    ]
-                ];
+                        <div class="hero-tags-wrap">
+                            <span class="hero-tags-label">Popular searches:</span>
+                            <div class="hero-tags">
+                                <a href="<?php echo $base_url; ?>json-formatter">JSON Formatter</a>
+                                <a href="<?php echo $base_url; ?>text-comparison">JSON Diff</a>
+                                <a href="<?php echo $base_url; ?>jwt-decoder">JWT Decoder</a>
+                                <a href="<?php echo $base_url; ?>base64-encoder">Base64</a>
+                                <a href="<?php echo $base_url; ?>url-encoder">URL Encoder</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                foreach ($pdfEditorTools as $tool) {
-                    $iconPrefix = in_array($tool['icon'], $brandIcons) ? 'fab' : 'fas';
-                    echo '<div><a href="' . $base_url . $tool['slug'] . '" class="card-link"><div class="card tool-card h-100"><div class="card-body"><i class="' . $iconPrefix . ' ' . $tool['icon'] . ' ' . $tool['color'] . '"></i><h3 class="card-title h5">' . $tool['title'] . '</h3><p class="card-text">' . $tool['description'] . '</p></div></div></a></div>';
-                }
-                ?>
+                <div class="col-lg-6">
+                    <div class="hero-visual d-none d-lg-block" aria-hidden="true">
+                        <div class="hero-visual-panel hero-panel-main">
+                            <div class="hero-panel-header">
+                                <span class="dot dot-purple"></span>
+                                <span class="dot dot-cyan"></span>
+                                <span class="dot dot-green"></span>
+                            </div>
+
+                            <div class="hero-console">
+                                <div class="hero-console-line line-lg"></div>
+                                <div class="hero-console-line"></div>
+                                <div class="hero-console-line"></div>
+                                <div class="hero-console-line line-mid"></div>
+                                <div class="hero-console-line line-sm"></div>
+                            </div>
+
+                            <div class="hero-floating-card hero-card-json">
+                                <span class="hero-card-label">JSON</span>
+                                <div class="hero-json-row"><span></span><span></span><span></span></div>
+                                <div class="hero-json-row small"><span></span><span></span></div>
+                                <div class="hero-json-row small"><span></span><span></span><span></span></div>
+                            </div>
+
+                            <div class="hero-floating-card hero-card-search">
+                                <span class="hero-card-label">Search</span>
+                                <div class="hero-search-mini">
+                                    <i class="fas fa-search"></i>
+                                    <span>json formatter</span>
+                                </div>
+                            </div>
+
+                            <div class="hero-floating-card hero-card-qa">
+                                <span class="hero-card-label">QA</span>
+                                <div class="hero-qa-bars">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- PDF Conversions Section -->
-    <section class="tools-section bg-light py-4" id="pdf-conversions">
+    <section class="trust-strip">
         <div class="container">
-            <h2 class="mb-5 mt-4">PDF Conversions <span class="emoji">🔄</span></h2>
-            <div class="tools-grid">
-                <?php
-                $pdfTools = [
-                    [
-                        'title' => 'PDF to Word',
-                        'description' => 'Convert PDFs to editable Word documents.',
-                        'icon' => 'fa-file-word',
-                        'color' => 'text-primary',
-                        'slug' => 'pdf-to-word'
-                    ],
-                    [
-                        'title' => 'Word to PDF',
-                        'description' => 'Convert editable Word documents to secure PDF files.',
-                        'icon' => 'fa-file-pdf',
-                        'color' => 'text-primary',
-                        'slug' => 'word-to-pdf'
-                    ],
-                    [
-                        'title' => 'PDF to Excel',
-                        'description' => 'Convert PDFs to editable Excel files.',
-                        'icon' => 'fa-file-excel',
-                        'color' => 'text-success',
-                        'slug' => 'pdf-to-excel'
-                    ],
-                    [
-                        'title' => 'Excel to PDF',
-                        'description' => 'Convert Microsoft Excel spreadsheets to PDF.',
-                        'icon' => 'fa-file-excel',
-                        'color' => 'text-success',
-                        'slug' => 'excel-to-pdf'
-                    ],
-                    [
-                        'title' => 'PDF to JPG',
-                        'description' => 'Convert PDF pages to high-quality JPG images.',
-                        'icon' => 'fa-file-image',
-                        'color' => 'text-warning',
-                        'slug' => 'pdf-to-jpg'
-                    ],
-                    [
-                        'title' => 'JPG to PDF',
-                        'description' => 'Convert JPG images to PDF documents.',
-                        'icon' => 'fa-file-image',
-                        'color' => 'text-warning',
-                        'slug' => 'jpg-to-pdf'
-                    ],
-                    // ==================== LOW PRIORITY PDF CONVERSION TOOLS ====================
-                    /*
-                    [
-                        'title' => 'PDF to PPT',
-                        'description' => 'Convert PDF documents to PowerPoint presentations.',
-                        'icon' => 'fa-file-powerpoint',
-                        'color' => 'text-danger',
-                        'slug' => 'pdf-to-ppt'
-                    ],
-                    [
-                        'title' => 'PDF to PNG',
-                        'description' => 'Convert PDFs to PNG images.',
-                        'icon' => 'fa-image',
-                        'color' => 'text-danger',
-                        'slug' => 'pdf-to-png'
-                    ],
-                    [
-                        'title' => 'PDF to CSV',
-                        'description' => 'Extract tables/data from PDFs to CSV.',
-                        'icon' => 'fa-file-csv',
-                        'color' => 'text-danger',
-                        'slug' => 'pdf-to-csv'
-                    ],
-                    [
-                        'title' => 'CSV to PDF',
-                        'description' => 'Convert Comma Separated Values files to PDF.',
-                        'icon' => 'fa-file-csv',
-                        'color' => 'text-danger',
-                        'slug' => 'csv-to-pdf'
-                    ],
-                    [
-                        'title' => 'PDF to HTML',
-                        'description' => 'Transform PDFs into web-friendly HTML.',
-                        'icon' => 'fa-html5',
-                        'color' => 'text-danger',
-                        'slug' => 'pdf-to-html'
-                    ],
-                    [
-                        'title' => 'HTML to PDF',
-                        'description' => 'Convert HTML web pages to PDF.',
-                        'icon' => 'fa-html5',
-                        'color' => 'text-danger',
-                        'slug' => 'html-to-pdf'
-                    ],
-                    [
-                        'title' => 'PDF to Text',
-                        'description' => 'Extract editable text from PDFs.',
-                        'icon' => 'fa-file-alt',
-                        'color' => 'text-dark',
-                        'slug' => 'pdf-to-text'
-                    ],
-                    [
-                        'title' => 'Text to PDF',
-                        'description' => 'Convert plain text files to PDF.',
-                        'icon' => 'fa-file-alt',
-                        'color' => 'text-muted',
-                        'slug' => 'text-to-pdf'
-                    ],
-                    [
-                        'title' => 'PDF to JSON',
-                        'description' => 'Extract structured data from PDFs to JSON.',
-                        'icon' => 'fa-code',
-                        'color' => 'text-info',
-                        'slug' => 'pdf-to-json'
-                    ],
-                    [
-                        'title' => 'JSON to PDF',
-                        'description' => 'Convert JSON data into PDF documents.',
-                        'icon' => 'fa-file-code',
-                        'color' => 'text-secondary',
-                        'slug' => 'json-to-pdf'
-                    ],
-                    [
-                        'title' => 'PDF to WebP',
-                        'description' => 'Convert PDFs to optimized WebP images.',
-                        'icon' => 'fa-file-image',
-                        'color' => 'text-success',
-                        'slug' => 'pdf-to-webp'
-                    ],
-                    [
-                        'title' => 'PDF to XML',
-                        'description' => 'Extract PDF data into XML format.',
-                        'icon' => 'fa-file-code',
-                        'color' => 'text-secondary',
-                        'slug' => 'pdf-to-xml'
-                    ],
-                    [
-                        'title' => 'XML to PDF',
-                        'description' => 'Convert XML data into PDF documents.',
-                        'icon' => 'fa-file-code',
-                        'color' => 'text-secondary',
-                        'slug' => 'xml-to-pdf'
-                    ],
-                    [
-                        'title' => 'PDF to JFIF',
-                        'description' => 'Convert your PDF documents to JFIF images.',
-                        'icon' => 'fa-file-image',
-                        'color' => 'text-danger',
-                        'slug' => 'pdf-to-jfif'
-                    ],
-                    [
-                        'title' => 'JFIF to PDF',
-                        'description' => 'Convert your JFIF images to PDF documents.',
-                        'icon' => 'fa-file-pdf',
-                        'color' => 'text-primary',
-                        'slug' => 'jfif-to-pdf'
-                    ],
-                    [
-                        'title' => 'IPYNB to PDF',
-                        'description' => 'Convert Jupyter notebooks (IPYNB) to PDF.',
-                        'icon' => 'fa-file-pdf',
-                        'color' => 'text-primary',
-                        'slug' => 'ipynb-to-pdf'
-                    ],
-                    [
-                        'title' => 'PDF to IPYNB',
-                        'description' => 'Convert PDF documents to Jupyter notebooks (IPYNB).',
-                        'icon' => 'fa-file-code',
-                        'color' => 'text-info',
-                        'slug' => 'pdf-to-ipynb'
-                    ],
-                    [
-                        'title' => 'PNR to PDF',
-                        'description' => 'Convert PNR files to PDF documents.',
-                        'icon' => 'fa-file-pdf',
-                        'color' => 'text-primary',
-                        'slug' => 'pnr-to-pdf'
-                    ],
-                    [
-                        'title' => 'EPUB to PDF',
-                        'description' => 'Convert EPUB e-books to PDF documents.',
-                        'icon' => 'fa-file-pdf',
-                        'color' => 'text-primary',
-                        'slug' => 'epub-to-pdf'
-                    ],
-                    [
-                        'title' => 'PDF to EPUB',
-                        'description' => 'Convert PDF documents to EPUB e-books.',
-                        'icon' => 'fa-book-reader',
-                        'color' => 'text-success',
-                        'slug' => 'pdf-to-epub'
-                    ],
-                    [
-                        'title' => 'PDF to Markdown',
-                        'description' => 'Convert PDF documents to Markdown files.',
-                        'icon' => 'fa-file-alt',
-                        'color' => 'text-secondary',
-                        'slug' => 'pdf-to-markdown'
-                    ],
-                    [
-                        'title' => 'PDF to TIFF',
-                        'description' => 'Convert PDF documents to TIFF images.',
-                        'icon' => 'fa-file-image',
-                        'color' => 'text-danger',
-                        'slug' => 'pdf-to-tiff'
-                    ],
-                    [
-                        'title' => 'PDF to SVG',
-                        'description' => 'Convert PDF documents to Scalable Vector Graphics (SVG).',
-                        'icon' => 'fa-bezier-curve',
-                        'color' => 'text-success',
-                        'slug' => 'pdf-to-svg'
-                    ],
-                    [
-                        'title' => 'SVG to PDF',
-                        'description' => 'Convert SVG images to PDF documents.',
-                        'icon' => 'fa-file-pdf',
-                        'color' => 'text-primary',
-                        'slug' => 'svg-to-pdf'
-                    ],
-                    [
-                        'title' => 'RTF to PDF',
-                        'description' => 'Convert Rich Text Format (RTF) files to PDF.',
-                        'icon' => 'fa-file-pdf',
-                        'color' => 'text-primary',
-                        'slug' => 'rtf-to-pdf'
-                    ],
-                    [
-                        'title' => 'DWG to PDF',
-                        'description' => 'Convert AutoCAD DWG files to PDF documents.',
-                        'icon' => 'fa-file-pdf',
-                        'color' => 'text-primary',
-                        'slug' => 'dwg-to-pdf'
-                    ],
-                    [
-                        'title' => 'PDF to PSD',
-                        'description' => 'Convert PDF documents to Photoshop (PSD) files.',
-                        'icon' => 'fa-file-image',
-                        'color' => 'text-danger',
-                        'slug' => 'pdf-to-psd'
-                    ],
-                    [
-                        'title' => 'Shreelipi to PDF',
-                        'description' => 'Convert Shreelipi files to PDF documents.',
-                        'icon' => 'fa-file-pdf',
-                        'color' => 'text-primary',
-                        'slug' => 'shreelipi-to-pdf'
-                    ],
-                    */
-                ];
-
-                foreach ($pdfTools as $tool) {
-                    $iconPrefix = in_array($tool['icon'], $brandIcons) ? 'fab' : 'fas';
-                    echo '<div><a href="' . $base_url . $tool['slug'] . '" class="card-link"><div class="card tool-card h-100"><div class="card-body"><i class="' . $iconPrefix . ' ' . $tool['icon'] . ' ' . $tool['color'] . '"></i><h3 class="card-title h5">' . $tool['title'] . '</h3><p class="card-text">' . $tool['description'] . '</p></div></div></a></div>';
-                }
-                ?>
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <div class="trust-icon"><i class="fas fa-circle-dollar-to-slot" aria-hidden="true"></i></div>
+                    <div>
+                        <h3>Free to use</h3>
+                        <p>100% free to use</p>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon"><i class="fas fa-user-check" aria-hidden="true"></i></div>
+                    <div>
+                        <h3>No signup</h3>
+                        <p>Start using instantly</p>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon"><i class="fas fa-window-maximize" aria-hidden="true"></i></div>
+                    <div>
+                        <h3>Browser-based</h3>
+                        <p>Works directly in your browser where supported</p>
+                    </div>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon"><i class="fas fa-shield-heart" aria-hidden="true"></i></div>
+                    <div>
+                        <h3>Privacy focused</h3>
+                        <p>Your data stays private where local processing is supported</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Text Tools Section -->
-    <section class="tools-section bg-white" id="text-tools">
+    <section class="working-section py-3 py-md-4 py-lg-5">
         <div class="container">
-            <h2 class="mb-5">Text Tools <span class="emoji">️</span></h2>
-            <div class="tools-grid">
-                <?php
-                $textTools = [
-                    ['title' => 'Word Counter', 'description' => 'Count words/chars.', 'icon' => 'fa-calculator', 'color' => 'text-info', 'slug' => 'word-counter'],
-                    ['title' => 'Case Converter', 'description' => 'Convert text case.', 'icon' => 'fa-text-height', 'color' => 'text-warning', 'slug' => 'case-converter'],
-                    ['title' => 'Remove Spaces', 'description' => 'Clean up text.', 'icon' => 'fa-compress', 'color' => 'text-success', 'slug' => 'remove-extra-spaces'],
-                    ['title' => 'Find & Replace', 'description' => 'Replace text.', 'icon' => 'fa-search-plus', 'color' => 'text-primary', 'slug' => 'find-replace-text'],
-                    ['title' => 'Reverse Text', 'description' => 'Reverse text.', 'icon' => 'fa-exchange-alt', 'color' => 'text-danger', 'slug' => 'reverse-text'],
-                    ['title' => 'Text to Slug', 'description' => 'Create URL slugs.', 'icon' => 'fa-link', 'color' => 'text-secondary', 'slug' => 'text-to-slug'],
-                    ['title' => 'Text Compare', 'description' => 'Compare texts.', 'icon' => 'fa-file-alt', 'color' => 'text-info', 'slug' => 'text-comparison'],
-                ];
+            <div class="working-header mb-4">
+                <h2>What are you working on?</h2>
+            </div>
 
-                foreach ($textTools as $tool) {
-                    $iconPrefix = in_array($tool['icon'], $brandIcons) ? 'fab' : 'fas';
-                    echo '<div><a href="' . $base_url . $tool['slug'] . '" class="card-link"><div class="card tool-card h-100"><div class="card-body"><i class="' . $iconPrefix . ' ' . $tool['icon'] . ' ' . $tool['color'] . '"></i><h3 class="card-title h5">' . $tool['title'] . '</h3><p class="card-text">' . $tool['description'] . '</p></div></div></a></div>';
-                }
-                ?>
+            <div class="working-grid">
+                <?php foreach ($categoryCards as $category): ?>
+                    <a href="<?php echo $category['url']; ?>" class="working-card card-accent-<?php echo $category['accent']; ?>">
+                        <div class="working-card-icon">
+                            <i class="fas <?php echo $category['icon']; ?>" aria-hidden="true"></i>
+                        </div>
+
+                        <div class="working-card-content">
+                            <h3><?php echo htmlspecialchars($category['title']); ?></h3>
+                            <p><?php echo htmlspecialchars($category['description']); ?></p>
+                        </div>
+
+                        <div class="working-card-arrow" aria-hidden="true">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                <?php endforeach; ?>
             </div>
         </div>
     </section>
 
-
-
-    <!-- Business Tools Section -->
-    <section class="tools-section bg-light" id="business-tools">
+    <section id="developer-tools" class="developer-home-section py-5">
         <div class="container">
-            <h2 class="mb-5">Business Tools <span class="emoji">🖼️</span></h2>
-            <div class="tools-grid">
-                <?php
-                $imageTools = [
-                    [
-                        'title' => 'Calendar Generator',
-                        'description' => 'Create and customize printable calendars for any month or year.',
-                        'icon' => 'fa-calendar',
-                        'color' => 'text-info',
-                        'slug' => 'calendar-generator'
-                    ],
-                    [
-                        'title' => 'Offer Letter Generator',
-                        'description' => 'Generate professional offer letters for job candidates.',
-                        'icon' => 'fa-file-contract',
-                        'color' => 'text-success',
-                        'slug' => 'offer-letter-generator'
-                    ],
-                    [
-                        'title' => 'Payroll Sheet Generator',
-                        'description' => 'Generate payroll sheets with employee details.',
-                        'icon' => 'fa-file-invoice-dollar',
-                        'color' => 'text-warning',
-                        'slug' => 'payroll-sheet-generator'
-                    ],
-                    [
-                        'title' => 'Timesheet Calculator',
-                        'description' => 'Easily calculate work hours, overtime, and total pay from timesheets. Free & online. ',
-                        'icon' => 'fa-clock',
-                        'color' => 'text-primary',
-                        'slug' => 'timesheet-calculator'
-                    ],
-                ];
+            <div class="developer-home-shell">
+                <div class="developer-home-copy">
+                    <p class="eyebrow mb-2">Built for Developers</p>
+                    <h2>Built for Developers</h2>
+                    <p>Fast browser-based utilities for JSON, encoding, APIs, security, web development and everyday engineering tasks.</p>
+                    <a href="<?php echo $base_url; ?>developer-tools" class="developer-home-link">View Developer Tools <span aria-hidden="true">→</span></a>
+                </div>
 
-                foreach ($imageTools as $tool) {
-                    $iconPrefix = in_array($tool['icon'], $brandIcons) ? 'fab' : 'fas';
-                    echo '<div><a href="' . $base_url . $tool['slug'] . '" class="card-link"><div class="card tool-card h-100"><div class="card-body"><i class="' . $iconPrefix . ' ' . $tool['icon'] . ' ' . $tool['color'] . '"></i><h3 class="card-title h5">' . $tool['title'] . '</h3><p class="card-text">' . $tool['description'] . '</p></div></div></a></div>';
-                }
-                ?>
+                <div class="developer-home-panel" aria-label="Developer tool categories">
+                    <div class="developer-chip-group">
+                        <span class="developer-chip">JSON</span>
+                        <span class="developer-chip">Encoding</span>
+                        <span class="developer-chip">JWT</span>
+                        <span class="developer-chip">Web</span>
+                        <span class="developer-chip">Code</span>
+                        <span class="developer-chip">Security</span>
+                        <span class="developer-chip">URLs</span>
+                        <span class="developer-chip">Date &amp; Time</span>
+                    </div>
+
+                    <div class="developer-mini-cards">
+                        <a href="<?php echo $base_url; ?>json-formatter" class="developer-mini-card">
+                            <span class="mini-card-icon"><i class="fas fa-code"></i></span>
+                            <span>JSON Formatter</span>
+                        </a>
+                        <a href="<?php echo $base_url; ?>jwt-decoder" class="developer-mini-card">
+                            <span class="mini-card-icon"><i class="fas fa-key"></i></span>
+                            <span>JWT Decoder</span>
+                        </a>
+                        <a href="<?php echo $base_url; ?>url-encoder" class="developer-mini-card">
+                            <span class="mini-card-icon"><i class="fas fa-link"></i></span>
+                            <span>URL Encoder</span>
+                        </a>
+                        <a href="<?php echo $base_url; ?>hash-generator" class="developer-mini-card">
+                            <span class="mini-card-icon"><i class="fas fa-fingerprint"></i></span>
+                            <span>Hash Generator</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-
-<!-- 
-    <!-- Web Tools Section -->
-    <section class="tools-section bg-light" id="web-tools">
+    <section class="qa-api-home-section py-5">
         <div class="container">
-            <h2 class="mb-5">Web Tools <span class="emoji"></span></h2>
-            <div class="tools-grid">
-                <?php
-                $webTools = [
-                    ['title' => 'Password Generator', 'description' => 'Create passwords.', 'icon' => 'fa-lock', 'color' => 'text-success', 'slug' => 'password-generator'],
-                    ['title' => 'QR Code Generator', 'description' => 'Create QR codes.', 'icon' => 'fa-qrcode', 'color' => 'text-purple', 'slug' => 'qr-code-generator'],
-                    ['title' => 'Color Picker', 'description' => 'Pick colors.', 'icon' => 'fa-palette', 'color' => 'text-info', 'slug' => 'color-picker'],
-                ];
-                foreach ($webTools as $tool) {
-                    $iconPrefix = in_array($tool['icon'], $brandIcons) ? 'fab' : 'fas';
-                    $url = isset($tool['url']) ? $tool['url'] : $base_url . $tool['slug'];
-                    echo '<div><a href="' . $url . '" class="card-link"><div class="card tool-card h-100"><div class="card-body"><i class="' . $iconPrefix . ' ' . $tool['icon'] . ' ' . $tool['color'] . '"></i><h3 class="card-title h5">' . $tool['title'] . '</h3><p class="card-text">' . $tool['description'] . '</p></div></div></a></div>';
-                }
-                ?>
+            <div class="qa-api-home-shell">
+                <div class="qa-api-home-header">
+                    <p class="eyebrow mb-2">QA &amp; API Testing</p>
+                    <h2>QA &amp; API Testing</h2>
+                    <p>Tools for QA engineers, SDETs, automation engineers and API testers.</p>
+                </div>
+
+                <div class="qa-api-workflow" aria-label="QA and API testing workflow">
+                    <a href="<?php echo $base_url; ?>json-formatter" class="qa-api-step">
+                        <span class="qa-api-step-name">JSON Formatter</span>
+                    </a>
+                    <span class="qa-api-arrow" aria-hidden="true">→</span>
+                    <a href="<?php echo $base_url; ?>json-formatter" class="qa-api-step">
+                        <span class="qa-api-step-name">JSON Validator</span>
+                    </a>
+                    <span class="qa-api-arrow" aria-hidden="true">→</span>
+                    <a href="<?php echo $base_url; ?>text-comparison" class="qa-api-step">
+                        <span class="qa-api-step-name">JSON Diff</span>
+                    </a>
+                    <span class="qa-api-arrow" aria-hidden="true">→</span>
+                    <a href="<?php echo $base_url; ?>jwt-decoder" class="qa-api-step">
+                        <span class="qa-api-step-name">JWT Decoder</span>
+                    </a>
+                    <span class="qa-api-arrow" aria-hidden="true">→</span>
+                    <a href="<?php echo $base_url; ?>base64-encoder" class="qa-api-step">
+                        <span class="qa-api-step-name">Base64</span>
+                    </a>
+                    <span class="qa-api-arrow" aria-hidden="true">→</span>
+                    <a href="<?php echo $base_url; ?>guides/http-status-codes-api-testing" class="qa-api-step">
+                        <span class="qa-api-step-name">HTTP Status</span>
+                    </a>
+                </div>
+
+                <div class="qa-api-actions">
+                    <a href="<?php echo $base_url; ?>qa-tools" class="qa-api-link">Explore QA Tools <span aria-hidden="true">→</span></a>
+                    <a href="<?php echo $base_url; ?>api-testing-tools" class="qa-api-link">Explore API Testing Tools <span aria-hidden="true">→</span></a>
+                </div>
             </div>
         </div>
-    </section> -->
-
-    <!-- Calculator Tools Section -->
-    <section class="tools-section bg-white" id="calculators">
-        <div class="container">
-            <h2 class="mb-5">Calculators <span class="emoji"></span></h2>
-            <div class="tools-grid">
-                <?php
-                $calcTools = [
-                    [
-                        'title' => 'Age Calculator',
-                        'description' => 'Calculate age from birth date to current date.',
-                        'icon' => 'fa-birthday-cake',
-                        'color' => 'text-primary',
-                        'slug' => 'age-calculator'
-                    ],
-                    [
-                        'title' => 'Simple Calculator',
-                        'description' => 'Basic calculator for addition, subtraction, multiplication and division.',
-                        'icon' => 'fa-calculator',
-                        'color' => 'text-success',
-                        'slug' => 'simple-calculator'
-                    ],
-                    [
-                        'title' => 'Percentage Calculator',
-                        'description' => 'Calculate percentages, increases, and decreases.',
-                        'icon' => 'fa-percent',
-                        'color' => 'text-info',
-                        'slug' => 'percentage-calculator'
-                    ],
-                    [
-                        'title' => 'Scientific Calculator',
-                        'description' => 'Advanced calculator with trigonometric, logarithmic and exponential functions.',
-                        'icon' => 'fa-square-root-alt',
-                        'color' => 'text-secondary',
-                        'slug' => 'scientific-calculator'
-                    ],
-                    [
-                        'title' => 'BMI Calculator',
-                        'description' => 'Calculate Body Mass Index based on height and weight.',
-                        'icon' => 'fa-weight',
-                        'color' => 'text-danger',
-                        'slug' => 'bmi-calculator'
-                    ],
-                    [
-                        'title' => 'EMI Calculator',
-                        'description' => 'Calculate Equated Monthly Installments for loans.',
-                        'icon' => 'fa-money-bill-wave',
-                        'color' => 'text-warning',
-                        'slug' => 'emi-calculator'
-                    ],
-                    [
-                        'title' => 'SIP Calculator',
-                        'description' => 'Calculate returns on Systematic Investment Plans (SIP).',
-                        'icon' => 'fa-calendar-plus',
-                        'color' => 'text-primary',
-                        'slug' => 'sip-calculator'
-                    ],
-                    [
-                        'title' => 'Lumpsum Calculator',
-                        'description' => 'Calculate returns on one-time lump sum investments.',
-                        'icon' => 'fa-money-bill-wave',
-                        'color' => 'text-success',
-                        'slug' => 'lumpsum-calculator'
-                    ],
-                    [
-                        'title' => 'SWP Calculator',
-                        'description' => 'Calculate Systematic Withdrawal Plan returns.',
-                        'icon' => 'fa-calendar-minus',
-                        'color' => 'text-info',
-                        'slug' => 'swp-calculator'
-                    ],
-                    [
-                        'title' => 'Mutual Fund Returns Calculator',
-                        'description' => 'Calculate returns from mutual fund investments.',
-                        'icon' => 'fa-chart-line',
-                        'color' => 'text-warning',
-                        'slug' => 'mutual-fund-returns-calculator'
-                    ],
-                    // ==================== LOW PRIORITY CALCULATOR TOOLS ====================
-                    /*
-                    [
-                        'title' => 'Sukanya Samriddhi Yojana (SSY) Calculator',
-                        'description' => 'Calculate returns for SSY savings.',
-                        'icon' => 'fa-female',
-                        'color' => 'text-danger',
-                        'slug' => 'sukanya-samriddhi-yojana-calculator'
-                    ],
-                    [
-                        'title' => 'Income Tax Calculator',
-                        'description' => 'Calculate your income tax liability.',
-                        'icon' => 'fa-file-invoice-dollar',
-                        'color' => 'text-primary',
-                        'slug' => 'income-tax-calculator'
-                    ],
-                    [
-                        'title' => 'PPF Calculator',
-                        'description' => 'Calculate Public Provident Fund returns.',
-                        'icon' => 'fa-piggy-bank',
-                        'color' => 'text-success',
-                        'slug' => 'ppf-calculator'
-                    ],
-                    [
-                        'title' => 'EPF Calculator',
-                        'description' => 'Calculate Employee Provident Fund returns.',
-                        'icon' => 'fa-building',
-                        'color' => 'text-info',
-                        'slug' => 'epf-calculator'
-                    ],
-                    [
-                        'title' => 'FD Calculator',
-                        'description' => 'Calculate Fixed Deposit returns.',
-                        'icon' => 'fa-lock',
-                        'color' => 'text-warning',
-                        'slug' => 'fd-calculator'
-                    ],
-                    [
-                        'title' => 'RD Calculator',
-                        'description' => 'Calculate Recurring Deposit returns.',
-                        'icon' => 'fa-calendar-week',
-                        'color' => 'text-danger',
-                        'slug' => 'rd-calculator'
-                    ],
-                    [
-                        'title' => 'NPS Calculator',
-                        'description' => 'Calculate National Pension Scheme returns.',
-                        'icon' => 'fa-user-tie',
-                        'color' => 'text-primary',
-                        'slug' => 'nps-calculator'
-                    ],
-                    [
-                        'title' => 'HRA Calculator',
-                        'description' => 'Calculate House Rent Allowance exemption.',
-                        'icon' => 'fa-home',
-                        'color' => 'text-success',
-                        'slug' => 'hra-calculator'
-                    ],
-                    [
-                        'title' => 'Retirement Calculator',
-                        'description' => 'Calculate required corpus for retirement.',
-                        'icon' => 'fa-umbrella-beach',
-                        'color' => 'text-info',
-                        'slug' => 'retirement-calculator'
-                    ],
-                    [
-                        'title' => 'Car Loan EMI Calculator',
-                        'description' => 'Calculate EMI for car loans.',
-                        'icon' => 'fa-car',
-                        'color' => 'text-warning',
-                        'slug' => 'car-loan-emi-calculator'
-                    ],
-                    [
-                        'title' => 'Home Loan EMI Calculator',
-                        'description' => 'Calculate EMI for home loans.',
-                        'icon' => 'fa-house-user',
-                        'color' => 'text-danger',
-                        'slug' => 'home-loan-emi-calculator'
-                    ],
-                    [
-                        'title' => 'Home Equity Loan Calculator',
-                        'description' => 'Calculate your home equity loan payments and interest.',
-                        'icon' => 'fa-home',
-                        'color' => 'text-info',
-                        'slug' => 'home-equity-loan-calculator'
-                    ],
-                    [
-                        'title' => 'Reverse Mortgage Calculator',
-                        'description' => 'Estimate your reverse mortgage payments and benefits.',
-                        'icon' => 'fa-percentage',
-                        'color' => 'text-warning',
-                        'slug' => 'reverse-mortgage-calculator'
-                    ],
-                    [
-                        'title' => 'Personal Loan Calculator',
-                        'description' => 'Calculate monthly payments and interest for personal loans.',
-                        'icon' => 'fa-calculator',
-                        'color' => 'text-success',
-                        'slug' => 'personal-loan-calculator'
-                    ],
-                    [
-                        'title' => 'Refinance Calculator',
-                        'description' => 'Calculate savings and compare refinancing options.',
-                        'icon' => 'fa-calculator',
-                        'color' => 'text-success',
-                        'slug' => 'refinance-calculator'
-                    ],
-                    [
-                        'title' => 'Simple Interest Calculator',
-                        'description' => 'Calculate simple interest on investments/loans.',
-                        'icon' => 'fa-percentage',
-                        'color' => 'text-primary',
-                        'slug' => 'simple-interest-calculator'
-                    ],
-                    [
-                        'title' => 'Compound Interest Calculator',
-                        'description' => 'Calculate compound interest on investments.',
-                        'icon' => 'fa-chart-bar',
-                        'color' => 'text-success',
-                        'slug' => 'compound-interest-calculator'
-                    ],
-                    [
-                        'title' => 'NSC Calculator',
-                        'description' => 'Calculate National Savings Certificate returns.',
-                        'icon' => 'fa-certificate',
-                        'color' => 'text-info',
-                        'slug' => 'nsc-calculator'
-                    ],
-                    [
-                        'title' => 'Step-up SIP Calculator',
-                        'description' => 'Calculate returns on increasing SIP investments.',
-                        'icon' => 'fa-sort-amount-up',
-                        'color' => 'text-warning',
-                        'slug' => 'step-up-sip-calculator'
-                    ],
-                    [
-                        'title' => 'Gratuity Calculator',
-                        'description' => 'Calculate gratuity amount for employees.',
-                        'icon' => 'fa-hand-holding-usd',
-                        'color' => 'text-danger',
-                        'slug' => 'gratuity-calculator'
-                    ],
-                    [
-                        'title' => 'CAGR Calculator',
-                        'description' => 'Calculate Compound Annual Growth Rate.',
-                        'icon' => 'fa-chart-line',
-                        'color' => 'text-primary',
-                        'slug' => 'cagr-calculator'
-                    ],
-                    [
-                        'title' => 'GST Calculator',
-                        'description' => 'Calculate Goods and Services Tax amounts.',
-                        'icon' => 'fa-receipt',
-                        'color' => 'text-success',
-                        'slug' => 'gst-calculator'
-                    ],
-                    [
-                        'title' => 'Flat vs Reducing Rate Calculator',
-                        'description' => 'Compare flat and reducing rate interest methods.',
-                        'icon' => 'fa-balance-scale-right',
-                        'color' => 'text-info',
-                        'slug' => 'flat-vs-reducing-rate-calculator'
-                    ],
-                    [
-                        'title' => 'Brokerage Calculator',
-                        'description' => 'Calculate brokerage charges for trades.',
-                        'icon' => 'fa-handshake',
-                        'color' => 'text-warning',
-                        'slug' => 'brokerage-calculator'
-                    ],
-                    [
-                        'title' => 'Margin Calculator',
-                        'description' => 'Calculate margin requirements for trading.',
-                        'icon' => 'fa-border-style',
-                        'color' => 'text-danger',
-                        'slug' => 'margin-calculator'
-                    ],
-                    [
-                        'title' => 'TDS Calculator',
-                        'description' => 'Calculate Tax Deducted at Source amounts.',
-                        'icon' => 'fa-file-invoice',
-                        'color' => 'text-primary',
-                        'slug' => 'tds-calculator'
-                    ],
-                    [
-                        'title' => 'Salary Calculator',
-                        'description' => 'Calculate take-home salary after deductions.',
-                        'icon' => 'fa-money-check-alt',
-                        'color' => 'text-success',
-                        'slug' => 'salary-calculator'
-                    ],
-                    [
-                        'title' => 'Inflation Calculator',
-                        'description' => 'Calculate future value considering inflation.',
-                        'icon' => 'fa-chart-pie',
-                        'color' => 'text-info',
-                        'slug' => 'inflation-calculator'
-                    ],
-                    [
-                        'title' => 'Discount Calculator',
-                        'description' => 'Calculate final price after discount and amount saved.',
-                        'icon' => 'fa-tag',
-                        'color' => 'text-warning',
-                        'slug' => 'discount-calculator'
-                    ],
-                    [
-                        'title' => 'PTO Calculator',
-                        'description' => 'Calculate your Paid Time Off (PTO) days and balance.',
-                        'icon' => 'fa-calendar-alt',
-                        'color' => 'text-info',
-                        'slug' => 'pto-calculator'
-                    ],
-                    [
-                        'title' => 'APY Calculator',
-                        'description' => 'Calculate Annual Percentage Yield for investments.',
-                        'icon' => 'fa-percentage',
-                        'color' => 'text-success',
-                        'slug' => 'apy-calculator'
-                    ],
-                    [
-                        'title' => 'Tax Calculator',
-                        'description' => 'Calculate your tax liability quickly and accurately.',
-                        'icon' => 'fa-calculator',
-                        'color' => 'text-primary',
-                        'slug' => 'tax-calculator'
-                    ],
-                    [
-                        'title' => 'Loan Eligibility Calculator',
-                        'description' => 'Check how much loan amount you are eligible for instantly.',
-                        'icon' => 'fa-hand-holding-usd',
-                        'color' => 'text-success',
-                        'slug' => 'loan-eligibility-calculator'
-                    ],
-                    [
-                        'title' => 'Investment Returns Calculator',
-                        'description' => 'Estimate your investment returns with ease.',
-                        'icon' => 'fa-chart-line',
-                        'color' => 'text-warning',
-                        'slug' => 'investment-returns-calculator'
-                    ],
-                    [
-                        'title' => 'Unit Converter',
-                        'description' => 'Convert between different units of measurement.',
-                        'icon' => 'fa-balance-scale',
-                        'color' => 'text-danger',
-                        'slug' => 'unit-converter'
-                    ],
-                    */
-                ];
-
-                foreach ($calcTools as $tool) {
-                    $iconPrefix = in_array($tool['icon'], $brandIcons) ? 'fab' : 'fas';
-                    echo '<div><a href="' . $base_url . $tool['slug'] . '" class="card-link"><div class="card tool-card h-100"><div class="card-body"><i class="' . $iconPrefix . ' ' . $tool['icon'] . ' ' . $tool['color'] . '"></i><h3 class="card-title h5">' . $tool['title'] . '</h3><p class="card-text">' . $tool['description'] . '</p></div></div></a></div>';
-                }
-                ?>
-            </div>
     </section>
+
+    <section id="devops-tools" class="tool-category-section py-5 bg-light-subtle">
+        <div class="container">
+            <div class="section-header d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                <div>
+                    <p class="eyebrow mb-1">Operations</p>
+                    <h2 class="mb-0">DevOps tools</h2>
+                </div>
+                <a href="<?php echo $base_url; ?>devops-tools" class="text-decoration-none fw-semibold">Open category</a>
+            </div>
+            <div class="row g-3">
+                <?php foreach ($devopsTools as $tool): ?>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <a href="<?php echo $tool['url']; ?>" class="tool-list-card card h-100 border-0 shadow-sm rounded-4 text-decoration-none text-body">
+                            <div class="card-body p-3">
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <span class="mini-tool-icon"><i class="fas <?php echo $tool['icon']; ?>"></i></span>
+                                    <h3 class="h6 mb-0"><?php echo htmlspecialchars($tool['title']); ?></h3>
+                                </div>
+                                <p class="small text-muted mb-0"><?php echo htmlspecialchars($tool['description']); ?></p>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <section id="text-tools" class="tool-category-section py-5">
+        <div class="container">
+            <div class="section-header d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                <div>
+                    <p class="eyebrow mb-1">Content workflows</p>
+                    <h2 class="mb-0">Text &amp; Content tools</h2>
+                </div>
+                <a href="<?php echo $base_url; ?>text-tools" class="text-decoration-none fw-semibold">Open category</a>
+            </div>
+            <div class="row g-3">
+                <?php foreach ($textTools as $tool): ?>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <a href="<?php echo $tool['url']; ?>" class="tool-list-card card h-100 border-0 shadow-sm rounded-4 text-decoration-none text-body">
+                            <div class="card-body p-3">
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <span class="mini-tool-icon"><i class="fas <?php echo $tool['icon']; ?>"></i></span>
+                                    <h3 class="h6 mb-0"><?php echo htmlspecialchars($tool['title']); ?></h3>
+                                </div>
+                                <p class="small text-muted mb-0"><?php echo htmlspecialchars($tool['description']); ?></p>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <section id="pdf-tools" class="tool-category-section py-5 bg-light-subtle">
+        <div class="container">
+            <div class="section-header d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                <div>
+                    <p class="eyebrow mb-1">Document processing</p>
+                    <h2 class="mb-0">PDF tools</h2>
+                </div>
+                <a href="<?php echo $base_url; ?>pdf-tools" class="text-decoration-none fw-semibold">Open category</a>
+            </div>
+            <div class="row g-3">
+                <?php foreach ($pdfTools as $tool): ?>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <a href="<?php echo $tool['url']; ?>" class="tool-list-card card h-100 border-0 shadow-sm rounded-4 text-decoration-none text-body">
+                            <div class="card-body p-3">
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <span class="mini-tool-icon"><i class="fas <?php echo $tool['icon']; ?>"></i></span>
+                                    <h3 class="h6 mb-0"><?php echo htmlspecialchars($tool['title']); ?></h3>
+                                </div>
+                                <p class="small text-muted mb-0"><?php echo htmlspecialchars($tool['description']); ?></p>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculators" class="tool-category-section py-5">
+        <div class="container">
+            <div class="section-header d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
+                <div>
+                    <p class="eyebrow mb-1">Planning and decision making</p>
+                    <h2 class="mb-0">Calculators</h2>
+                </div>
+                <a href="<?php echo $base_url; ?>calculators" class="text-decoration-none fw-semibold">Open category</a>
+            </div>
+            <div class="row g-3">
+                <?php foreach ($calculatorTools as $tool): ?>
+                    <div class="col-12 col-sm-6 col-lg-4">
+                        <a href="<?php echo $tool['url']; ?>" class="tool-list-card card h-100 border-0 shadow-sm rounded-4 text-decoration-none text-body">
+                            <div class="card-body p-3">
+                                <div class="d-flex align-items-center gap-3 mb-2">
+                                    <span class="mini-tool-icon"><i class="fas <?php echo $tool['icon']; ?>"></i></span>
+                                    <h3 class="h6 mb-0"><?php echo htmlspecialchars($tool['title']); ?></h3>
+                                </div>
+                                <p class="small text-muted mb-0"><?php echo htmlspecialchars($tool['description']); ?></p>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <section class="privacy-section py-5">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <div class="col-lg-6">
+                    <p class="eyebrow mb-2">Privacy-first</p>
+                    <h2 class="mb-3">Most tools work in your browser</h2>
+                    <p class="mb-3">WordsCompare is built for fast, lightweight productivity. Most tools process content locally in the browser, which means less friction, more privacy, and no unnecessary uploads.</p>
+                    <p class="mb-0">This approach keeps the experience quick, secure, and accessible for developers, testers, and everyday users working on real tasks.</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow-sm rounded-4">
+                        <div class="card-body p-4">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <span class="feature-icon bg-success-subtle text-success"><i class="fas fa-shield-alt"></i></span>
+                                <h3 class="h5 mb-0">Browser processing</h3>
+                            </div>
+                            <ul class="list-unstyled mb-0">
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Local processing reduces upload dependence</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Faster results for everyday edits and checks</li>
+                                <li class="mb-2"><i class="fas fa-check text-success me-2"></i> Better fit for content, JSON, text and PDF work</li>
+                                <li><i class="fas fa-check text-success me-2"></i> Straightforward access on desktop and mobile</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="popular-guides py-5 bg-light-subtle">
+        <div class="container">
+            <div class="section-header mb-4">
+                <p class="eyebrow mb-1">Helpful starting points</p>
+                <h2 class="mb-0">Popular guides</h2>
+            </div>
+            <div class="row g-3">
+                <?php foreach ($guideCards as $guide): ?>
+                    <div class="col-12 col-md-4">
+                        <a href="<?php echo $guide['url']; ?>" class="guide-card card border-0 shadow-sm h-100 rounded-4 text-decoration-none text-body">
+                            <div class="card-body p-4">
+                                <div class="d-flex align-items-center justify-content-between mb-3">
+                                    <span class="feature-icon"><i class="fas fa-book-open"></i></span>
+                                    <i class="fas fa-arrow-right text-muted"></i>
+                                </div>
+                                <h3 class="h5 mb-2"><?php echo htmlspecialchars($guide['title']); ?></h3>
+                                <p class="text-muted mb-0"><?php echo htmlspecialchars($guide['description']); ?></p>
+                            </div>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .home-page-shell .eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #dc3545;
+        }
+
+        .hero-panel {
+            background: linear-gradient(135deg, #ffffff 0%, #f7f8fb 100%);
+            border-bottom: 1px solid #edf0f5;
+        }
+
+        .hero-copy h1 {
+            letter-spacing: -0.05em;
+            line-height: 1.05;
+            color: #111827;
+        }
+
+        /* Homepage uses the global search widget now; local inline search removed. */
+
+        .search-result-item,
+        .search-result-empty {
+            display: block;
+            padding: 0.8rem 1rem;
+            color: #1f2937;
+            text-decoration: none;
+            border-bottom: 1px solid #eef2f7;
+            font-size: 0.95rem;
+        }
+
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+
+        .search-result-item:hover,
+        .search-result-item:focus-visible {
+            background: #f8f9fb;
+            color: #111827;
+            text-decoration: none;
+        }
+
+        .hero-feature-card,
+        .tool-card-link,
+        .category-tile,
+        .tool-list-card,
+        .guide-card {
+            transition: box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .hero-feature-card:hover,
+        .tool-card-link:hover,
+        .category-tile:hover,
+        .tool-list-card:hover,
+        .guide-card:hover {
+            box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08) !important;
+            transform: translateY(-2px);
+        }
+
+        .feature-icon,
+        .tool-icon,
+        .mini-tool-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: #fff5f5;
+            color: #dc3545;
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+        }
+
+        .mini-tool-icon {
+            width: 34px;
+            height: 34px;
+            font-size: 0.85rem;
+            background: #f3f6fb;
+            color: #2b2d42;
+        }
+
+        .category-icon {
+            width: 52px;
+            height: 52px;
+            font-size: 1.1rem;
+        }
+
+        .tool-card-link .card-body,
+        .tool-list-card .card-body,
+        .guide-card .card-body,
+        .category-tile .card-body {
+            height: 100%;
+        }
+
+        .tool-list-card,
+        .guide-card,
+        .category-tile,
+        .tool-card-link {
+            border-radius: 1.25rem !important;
+        }
+
+        .section-header a,
+        .category-tile,
+        .tool-list-card,
+        .guide-card,
+        .tool-card-link {
+            text-decoration: none !important;
+        }
+
+        @media (max-width: 991.98px) {
+            .hero-copy h1 {
+                font-size: clamp(2.25rem, 6vw, 3.3rem);
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .hero-panel,
+            .popular-tools,
+            .tool-category-section,
+            .privacy-section,
+            .popular-guides {
+                padding-top: 2.5rem !important;
+                padding-bottom: 2.5rem !important;
+            }
+
+            .section-header {
+                align-items: flex-start !important;
+            }
+        }
+    </style>
+</main>
 
     <!-- All Tools CTA (SEO + Accessibility optimized) -->
     <section class="py-5 bg-white">
@@ -980,16 +667,6 @@ include 'includes/header.php';
                             try different settings.</li>
                     </ol>
 
-                    <p class="small text-muted mb-3">
-                        Tip: Use the "View All Tools" page to see a complete list and the search bar for faster
-                        access.
-                    </p>
-
-                    <div class="text-center">
-                        <a href="#" class="btn btn-danger btn-lg px-4 py-2">
-                            <i class="fas fa-th-list me-2"></i> View All Tools
-                        </a>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1451,7 +1128,6 @@ include 'includes/header.php';
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-10">
-                    <!-- <h2 class="mb-4 text-center">Why Choose WordsCompare?</h2> -->
                     <p class="lead mb-4 text-center">WordsCompare provides a comprehensive suite of free online
                         tools
                         designed to make your daily tasks easier. From PDF conversion to text analysis, calculators
@@ -1753,33 +1429,6 @@ include 'includes/header.php';
                             complexity.</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Final Premium Banner (Replaced with Beautiful CSS Version) -->
-    <section class="bottom-promo-banner py-5" style="background: #f8f9fa;">
-        <div class="container d-flex justify-content-center">
-            <div class="banner-wrapper overflow-hidden shadow-lg hover-scale transition-transform"
-                style="border-radius: 24px; border: none; max-width: 1000px; width: 100%; background: linear-gradient(45deg, #0575E6 0%, #021B79 100%);">
-                <a href="#pdf-conversions" class="d-block text-decoration-none p-5 text-center position-relative">
-                    <div
-                        style="position: absolute; top: -20px; right: -20px; width: 150px; height: 150px; background: rgba(255,255,255,0.05); border-radius: 50%;">
-                    </div>
-                    <div class="position-relative">
-                        <h2 class="h1 text-white fw-bold mb-3">Elevate Your Workflow</h2>
-                        <p class="text-white-50 lead mb-4">Experience the power of professional document tools, free
-                            forever.</p>
-                        <div class="d-inline-flex gap-3 flex-wrap justify-content-center">
-                            <span class="badge bg-light text-primary p-3 rounded-pill px-4"><i
-                                    class="fas fa-bolt me-2"></i> Fast</span>
-                            <span class="badge bg-light text-primary p-3 rounded-pill px-4"><i
-                                    class="fas fa-lock me-2"></i> Secure</span>
-                            <span class="badge bg-light text-primary p-3 rounded-pill px-4"><i
-                                    class="fas fa-check-circle me-2"></i> Pro Quality</span>
-                        </div>
-                    </div>
-                </a>
             </div>
         </div>
     </section>

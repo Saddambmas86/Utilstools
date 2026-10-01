@@ -1,23 +1,24 @@
 # # Enable GZIP Compression
-# <IfModule mod_deflate.c>
-#     AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml
-# </IfModule>
+# Enable GZIP Compression
+<IfModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json application/xml
+</IfModule>
 
-# # Enable Browser Caching
-# <IfModule mod_expires.c>
-#     ExpiresActive On
-#     ExpiresByType image/jpg "access plus 1 year"
-#     ExpiresByType image/jpeg "access plus 1 year"
-#     ExpiresByType image/gif "access plus 1 year"
-#     ExpiresByType image/png "access plus 1 year"
-#     ExpiresByType image/webp "access plus 1 year"
-#     ExpiresByType image/svg+xml "access plus 1 year"
-#     ExpiresByType text/css "access plus 1 month"
-#     ExpiresByType application/javascript "access plus 1 month"
-#     ExpiresByType text/javascript "access plus 1 month"
-#     ExpiresByType application/pdf "access plus 1 month"
-#     ExpiresByType text/html "access plus 1 hour"
-# </IfModule>
+# Enable Browser Caching for static assets
+<IfModule mod_expires.c>
+	ExpiresActive On
+	ExpiresByType image/jpg "access plus 1 year"
+	ExpiresByType image/jpeg "access plus 1 year"
+	ExpiresByType image/gif "access plus 1 year"
+	ExpiresByType image/png "access plus 1 year"
+	ExpiresByType image/webp "access plus 1 year"
+	ExpiresByType image/svg+xml "access plus 1 year"
+	ExpiresByType text/css "access plus 1 month"
+	ExpiresByType application/javascript "access plus 1 month"
+	ExpiresByType text/javascript "access plus 1 month"
+	ExpiresByType application/pdf "access plus 1 month"
+	ExpiresByType text/html "access plus 1 hour"
+</IfModule>
 
 # # Cache Control Headers
 # <IfModule mod_headers.c>
@@ -31,6 +32,23 @@
 
 RewriteEngine On
 
+# Force HTTPS for non-localhosts (preserve host)
+# Skip forcing HTTPS when developing on localhost or 127.0.0.1
+RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)$ [NC]
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Custom 404 handler
+ErrorDocument 404 /404.php
+
+# Remove trailing slash for non-directory requests (normalize URLs)
+RewriteCond %{REQUEST_URI} !^/$
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+# Serve dynamic sitemap at /sitemap.xml
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
 # Block direct access to /views/tools/*.php and /views/content/*.php
 RewriteCond %{THE_REQUEST} /views/(tools|content)/([^\s?]+\.php) [NC]
 RewriteRule ^ - [F,L]
@@ -40,10 +58,23 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(about|contact|privacy|disclaimer)/?$ views/$1.php [L,NC]
 
+# Guides section
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^guides/?$ views/guides/index.php [L,NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^guides/([a-z0-9-]+)/?$ views/guides/$1.php [L,NC]
+
 # Text Comparison Cluster
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(compare-two-text-files-online|compare-text-line-by-line|compare-json-files-online|compare-xml-files-online|compare-html-files-online|compare-css-files-online|compare-code-files-online|online-text-diff-tool|text-difference-checker|compare-text-documents)/?$ views/tools/text-comparison.php [L,NC]
+
+# Category landing pages
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(developer-tools|qa-tools|api-testing-tools|devops-tools|json-tools|text-tools|pdf-tools|calculators|converters)/?$ views/category/$1.php [L,NC]
 
 # Second - Route tool pages (pdf-to-csv, etc.)
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -56,8 +87,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !^/views/tools/ [NC]
 RewriteRule ^([^/]+)/?$ $1.php [L]
 
-#Redirect non-www → www
-RewriteEngine On
+# Redirect non-www → www (skip for localhost and 127.0.0.1)
+RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)$ [NC]
 RewriteCond %{HTTP_HOST} !^www\. [NC]
 RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 

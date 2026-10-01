@@ -134,7 +134,7 @@ include '../../includes/header.php';
                                     <small class="text-muted">Supported formats: PNG, JPG, GIF. Recommended: PNG with transparency.</small>
                                 </div>
                                 <div id="imagePreview" class="text-center mb-3">
-                                    <img src="#" alt="Image Preview" class="img-thumbnail" style="max-width: 200px; max-height: 200px; display: none;">
+                                    <img src="#" alt="Image Preview" class="img-thumbnail" loading="lazy" style="max-width: 200px; max-height: 200px; display: none;">
                                 </div>
                                 <div class="row g-3">
                                      <div class="col-md-6">
