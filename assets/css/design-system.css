@@ -167,9 +167,9 @@ body.app-shell [data-bs-theme="dark"] .wc-wordmark,
         z-index: 1060;
         top: 50vh;
         left: -0.9rem;
-        width: 1.8rem;
-        height: 1.8rem;
-        min-width: 1.8rem;
+        width: 2.2em;
+        height: 3.8rem;
+        min-width: 2.2rem;
         min-height: 3.8rem;
         transform: translateY(-50%);
         border: 1px solid rgba(255, 255, 255, 0.22);
@@ -179,7 +179,7 @@ body.app-shell [data-bs-theme="dark"] .wc-wordmark,
         box-shadow: 0 3px 10px rgba(11, 18, 37, 0.28);
         transition: background-color var(--wc-transition-fast), color var(--wc-transition-fast), box-shadow var(--wc-transition-fast), transform var(--wc-transition-fast);
     }
-    body.app-shell .app-nav-controls .app-sidebar-toggle i { font-size: 0.72rem; }
+    body.app-shell .app-nav-controls .app-sidebar-toggle i { display: inline-block; font-size: 0.72rem; line-height: 1; text-decoration: none; }
     body.app-shell .app-nav-controls .app-sidebar-toggle:hover {
         background: linear-gradient(135deg, #ff2d55, #ff8a50);
         color: #ffffff;

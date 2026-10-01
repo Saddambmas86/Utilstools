@@ -1,7 +1,7 @@
 <?php
 // SEO and Page Metadata
-$page_title = "Income Tax Calculator India FY 2024-25 - Free Online Tool"; // You may Change the Title here
-$page_description = "Free income tax calculator for India. Calculate your income tax liability under old and new tax regime for FY 2024-25. Plan deductions and save more tax."; // Put your Description here
+$page_title = "Income Tax Calculator FY 2026-27";
+$page_description = "Estimate resident individual tax on normal-rate income for India's Tax Year 2026-27. Choose old or new regime; includes rebate and 4% cess.";
 $page_keywords = "income tax calculator, calculator, online calculator, free math tools, age calculator, bmi calculator, conversion calculator, wordscompare";
 
 // Include common header
@@ -44,7 +44,7 @@ include '../../includes/header.php';
                 <div class="text-center mb-4 mb-md-5">
                     <h1 class="h2 fw-bold text-gray-800 mb-2">Income Tax Calculator</h1>
                     <p class="lead text-gray-500 mx-auto" style="max-width: 700px">
-                        Estimate your income tax liability for the current financial year.
+                        Estimate tax on normal slab-rate income for Tax Year 2026-27 (1 April 2026 to 31 March 2027).
                     </p>
                 </div>
 
@@ -54,55 +54,32 @@ include '../../includes/header.php';
                             <h3 class="h4 fw-bold text-gray-700 mb-4">Your Income Details</h3>
                             <div class="space-y-4">
                                 <div>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <label for="annual-income" class="form-label mb-1">Annual Income (Gross)</label>
-                                        <div class="d-flex align-items-center">
-                                            <select id="currency-select" class="form-select form-select-sm me-2" onchange="updateCalculator()">
-                                                <option value="USD" selected>$ (USD)</option>
-                                                <option value="EUR">EUR (€)</option>
-                                                <option value="INR">INR (₹)</option>
-                                                <option value="GBP">GBP (£)</option>
-                                                <option value="JPY">JPY (¥)</option>
-                                                <option value="AUD">AUD ($)</option>
-                                                <option value="CAD">CAD ($)</option>
-                                                <option value="CHF">CHF (Fr.)</option>
-                                                <option value="CNY">CNY (¥)</option>
-                                                <option value="SEK">SEK (kr)</option>
-                                                <option value="NZD">NZD ($)</option>
-                                                <option value="MXN">MXN ($)</option>
-                                                <option value="SGD">SGD ($)</option>
-                                                <option value="HKD">HKD ($)</option>
-                                                <option value="NOK">NOK (kr)</option>
-                                                <option value="KRW">KRW (₩)</option>
-                                                <option value="TRY">TRY (₺)</option>
-                                                <option value="RUB">RUB (₽)</option>
-                                                <option value="BRL">BRL (R$)</option>
-                                                <option value="ZAR">ZAR (R)</option>
-                                            </select>
-                                        </div>
-                                        </div>
+                                    <label for="annual-income" class="form-label mb-1">Net taxable income (INR)</label>
                                     <div class="input-group">
-                                        <input type="number" id="annual-income" min="0" value="700000" class="form-control" oninput="updateCalculator()">
+                                        <span class="input-group-text">₹</span>
+                                        <input type="number" id="annual-income" min="0" max="5000000" step="1" value="800000" class="form-control" oninput="updateCalculator()">
                                     </div>
-                                    <small class="form-text text-muted">Enter your total annual income before deductions.</small>
+                                    <small class="form-text text-muted">Enter income after deductions and exemptions permitted under the selected regime.</small>
                                 </div>
 
                                 <div>
-                                    <label for="deductions" class="form-label mb-1">Deductions (e.g., 80C, 80D)</label>
-                                    <div class="input-group">
-                                        <input type="number" id="deductions" min="0" value="150000" class="form-control" oninput="updateCalculator()">
-                                    </div>
-                                    <small class="form-text text-muted">Total amount of eligible tax deductions.</small>
-                                </div>
-
-                                <div>
-                                    <label for="age-group" class="form-label mb-1">Age Group</label>
-                                    <select id="age-group" class="form-select" onchange="updateCalculator()">
-                                        <option value="below60">Below 60 years</option>
-                                        <option value="60to80">60 to 80 years (Senior Citizen)</option>
-                                        <option value="above80">Above 80 years (Super Senior Citizen)</option>
+                                    <label for="tax-regime" class="form-label mb-1">Tax regime</label>
+                                    <select id="tax-regime" class="form-select" onchange="updateCalculator()">
+                                        <option value="new" selected>New regime (default)</option>
+                                        <option value="old">Old regime</option>
                                     </select>
                                 </div>
+
+                                <div>
+                                    <label for="age-group" class="form-label mb-1">Age group (old regime only)</label>
+                                    <select id="age-group" class="form-select" onchange="updateCalculator()">
+                                        <option value="below60">Below 60 years</option>
+                                        <option value="60to80">60 to under 80 years (Senior Citizen)</option>
+                                        <option value="above80">80 years or older (Super Senior Citizen)</option>
+                                    </select>
+                                    <small class="form-text text-muted">Age does not change the new-regime slabs.</small>
+                                </div>
+                                <p class="small text-muted mb-0">Resident individuals only. Special-rate income and surcharge are not included; estimates above ₹50 lakh are outside this calculator's scope.</p>
                             </div>
                         </div>
                     </div>
@@ -113,7 +90,7 @@ include '../../includes/header.php';
                             <p id="net-taxable-income-result" class="display-6 fw-bold text-gray-800 mb-3">0</p>
                             <div class="d-flex justify-content-center gap-4">
                                 <div class="text-start">
-                                    <p class="small text-gray-500">Total Tax Liability</p>
+                                    <p class="small text-gray-500">Estimated tax (including cess)</p>
                                     <p id="total-tax-result" class="h4 fw-semibold text-primary">0</p>
                                 </div>
                                 <div class="text-start">
@@ -129,7 +106,7 @@ include '../../includes/header.php';
 
 
         <div class="row g-4 py-5">
-            <h3 class="text-2xl font-bold text-gray-800 text-center mb-4">Tax Breakdown</h3>
+            <h3 class="text-2xl font-bold text-gray-800 text-center mb-4">Estimated tax breakdown</h3>
             <div class="col-12 px-0"> <div class="table-responsive"> <table class="table table-bordered table-hover mb-0"> <thead class="thead-light"> <tr>
                                 <th class="text-left py-3 px-4 text-xs font-medium text-gray-500 uppercase">Income Slab</th>
                                 <th class="text-right py-3 px-4 text-xs font-medium text-gray-500 uppercase">Tax Rate</th>
@@ -171,11 +148,8 @@ include '../../includes/header.php';
 
 // Get DOM elements
 const annualIncomeInput = document.getElementById('annual-income');
-const deductionsInput = document.getElementById('deductions');
+const taxRegimeSelect = document.getElementById('tax-regime');
 const ageGroupSelect = document.getElementById('age-group');
-// START: Added currency select element
-const currencySelect = document.getElementById('currency-select');
-// END: Added currency select element
 
 const netTaxableIncomeResult = document.getElementById('net-taxable-income-result');
 const totalTaxResult = document.getElementById('total-tax-result');
@@ -184,11 +158,8 @@ const taxBreakdownTableBody = document.getElementById('tax-breakdown-table-body'
 
 // Event Listeners
 annualIncomeInput.addEventListener('input', updateCalculator);
-deductionsInput.addEventListener('input', updateCalculator);
+taxRegimeSelect.addEventListener('change', updateCalculator);
 ageGroupSelect.addEventListener('change', updateCalculator);
-// START: Added event listener for currency select
-currencySelect.addEventListener('change', updateCalculator);
-// END: Added event listener for currency select
 
 // Initial calculation on page load
 window.onload = function() {
@@ -201,10 +172,9 @@ window.onload = function() {
  * @returns {string} The formatted currency string.
  */
 function formatCurrency(amount) {
-    const selectedCurrency = currencySelect.value; // Get the selected currency from the dropdown
-    return new Intl.NumberFormat('en-US', { // Use a generic locale like 'en-US'
+    return new Intl.NumberFormat('en-IN', {
         style: 'currency',
-        currency: selectedCurrency, // Use the selected currency
+        currency: 'INR',
         minimumFractionDigits: 0,
         maximumFractionDigits: 0
     }).format(amount);
@@ -214,120 +184,104 @@ function formatCurrency(amount) {
  * Updates the tax calculation and display.
  */
 function updateCalculator() {
-    const annualIncome = parseFloat(annualIncomeInput.value) || 0;
-    const deductions = parseFloat(deductionsInput.value) || 0;
-    const ageGroup = ageGroupSelect.value;
+    const netTaxableIncome = Math.max(0, Number(annualIncomeInput.value) || 0);
+    const regime = taxRegimeSelect.value;
 
-    const netTaxableIncome = Math.max(0, annualIncome - deductions);
-
-    // Display net taxable income using the new formatCurrency function
     netTaxableIncomeResult.textContent = formatCurrency(netTaxableIncome);
+    ageGroupSelect.disabled = regime === 'new';
 
-    calculateTax(netTaxableIncome, ageGroup);
+    calculateTax(netTaxableIncome, ageGroupSelect.value, regime);
 }
 
 /**
  * Calculates the income tax based on taxable income and age group.
  * @param {number} taxableIncome The calculated net taxable income.
- * @param {string} ageGroup The selected age group (below60, 60to80, above80).
+ * @param {string} ageGroup The selected age group for the old regime.
+ * @param {string} regime The selected regime (new or old).
  */
-function calculateTax(taxableIncome, ageGroup) {
-    let tax = 0;
-    let taxBreakdown = [];
-    let remainingTaxableIncome = taxableIncome;
-    let rebate87A = 0; // For tax rebate under Section 87A
+function calculateTax(taxableIncome, ageGroup, regime) {
+    if (taxableIncome > 5000000) {
+        totalTaxResult.textContent = 'Not estimated';
+        averageTaxRateResult.textContent = 'Out of scope';
+        taxBreakdownTableBody.innerHTML = '<tr><td colspan="3" class="text-center py-2 px-4">Surcharge is not included above ₹50 lakh.</td></tr>';
+        return;
+    }
 
-    // Define tax slabs based on age group
     let slabs;
-    if (ageGroup === 'below60') {
+    if (regime === 'new') {
         slabs = [
-            { limit: 250000, rate: 0.00 },
-            { limit: 500000, rate: 0.05 },
-            { limit: 1000000, rate: 0.20 },
+            { limit: 400000, rate: 0 },
+            { limit: 800000, rate: 0.05 },
+            { limit: 1200000, rate: 0.10 },
+            { limit: 1600000, rate: 0.15 },
+            { limit: 2000000, rate: 0.20 },
+            { limit: 2400000, rate: 0.25 },
             { limit: Infinity, rate: 0.30 }
         ];
-        if (taxableIncome > 0 && taxableIncome <= 500000) { // Check taxableIncome > 0 to avoid rebate for 0 income
-            rebate87A = Math.min(taxableIncome * 0.05, 12500); // Max rebate is 12,500
-        }
     } else if (ageGroup === '60to80') {
         slabs = [
-            { limit: 300000, rate: 0.00 },
+            { limit: 300000, rate: 0 },
             { limit: 500000, rate: 0.05 },
             { limit: 1000000, rate: 0.20 },
             { limit: Infinity, rate: 0.30 }
         ];
-         if (taxableIncome > 0 && taxableIncome <= 500000) { // Check taxableIncome > 0 to avoid rebate for 0 income
-            rebate87A = Math.min(taxableIncome * 0.05, 12500); // Max rebate is 12,500
-        }
-    } else { // above80
+    } else if (ageGroup === 'above80') {
         slabs = [
-            { limit: 500000, rate: 0.00 },
+            { limit: 500000, rate: 0 },
+            { limit: 1000000, rate: 0.20 },
+            { limit: Infinity, rate: 0.30 }
+        ];
+    } else {
+        slabs = [
+            { limit: 250000, rate: 0 },
+            { limit: 500000, rate: 0.05 },
             { limit: 1000000, rate: 0.20 },
             { limit: Infinity, rate: 0.30 }
         ];
     }
 
-    let previousSlabLimit = 0;
-    for (let i = 0; i < slabs.length; i++) {
-        const slab = slabs[i];
-        let incomeInSlab = 0;
-        let taxInSlab = 0;
-        let slabLabel = "";
-
-        if (remainingTaxableIncome > 0) {
-            // Calculate the portion of income falling within the current slab
-            if (i === 0) { // First slab
-                 incomeInSlab = Math.min(remainingTaxableIncome, slab.limit);
-            } else { // Subsequent slabs
-                // Calculate the income within the current slab's range
-                let currentSlabUpperLimit = slab.limit;
-                // If it's the last slab (Infinity), then incomeInSlab is just the remainingTaxableIncome
-                if (slab.limit === Infinity) {
-                    incomeInSlab = remainingTaxableIncome;
-                } else {
-                    incomeInSlab = Math.min(remainingTaxableIncome, currentSlabUpperLimit - previousSlabLimit);
-                }
-            }
-            
-            if (incomeInSlab > 0) {
-                taxInSlab = incomeInSlab * slab.rate;
-                tax += taxInSlab;
-                remainingTaxableIncome -= incomeInSlab;
-
-                // Determine the label for the slab
-                if (slab.limit === Infinity) {
-                    slabLabel = `Above ${formatCurrency(previousSlabLimit)}`;
-                } else {
-                    // For slabs starting from 0, the lower bound for the label should be 0 or 1
-                    let lowerBoundLabel = (previousSlabLimit === 0) ? formatCurrency(0) : formatCurrency(previousSlabLimit + 1);
-                    slabLabel = `${lowerBoundLabel} to ${formatCurrency(slab.limit)}`;
-                }
-
-                taxBreakdown.push({
-                    slab: slabLabel,
-                    rate: `${(slab.rate * 100).toFixed(0)}%`,
-                    amount: taxInSlab
-                });
-            }
+    let tax = 0;
+    let previousLimit = 0;
+    const taxBreakdown = [];
+    for (const slab of slabs) {
+        const incomeInSlab = Math.max(0, Math.min(taxableIncome, slab.limit) - previousLimit);
+        if (incomeInSlab > 0) {
+            const taxInSlab = incomeInSlab * slab.rate;
+            tax += taxInSlab;
+            taxBreakdown.push({
+                slab: slab.limit === Infinity
+                    ? `Above ${formatCurrency(previousLimit)}`
+                    : previousLimit === 0
+                        ? `Up to ${formatCurrency(slab.limit)}`
+                        : `${formatCurrency(previousLimit + 1)} to ${formatCurrency(slab.limit)}`,
+                rate: `${(slab.rate * 100).toFixed(0)}%`,
+                amount: taxInSlab
+            });
         }
-        previousSlabLimit = slab.limit;
-        if (remainingTaxableIncome <= 0) break; // Stop if all income has been taxed
+        previousLimit = slab.limit;
+        if (taxableIncome <= slab.limit) break;
     }
 
-    // Apply Section 87A rebate
-    tax = Math.max(0, tax - rebate87A);
+    let rebate87A = 0;
+    if (regime === 'new') {
+        const rebateThreshold = 1200000;
+        rebate87A = Math.min(tax, 60000);
+        if (taxableIncome > rebateThreshold) {
+            rebate87A = Math.min(rebate87A, Math.max(0, tax - (taxableIncome - rebateThreshold)));
+        }
+    } else if (taxableIncome <= 500000) {
+        rebate87A = Math.min(tax, 12500);
+    }
 
-    // Add 4% Health and Education Cess
-    const cess = tax * 0.04;
-    tax += cess;
+    const taxAfterRebate = Math.max(0, tax - rebate87A);
+    const cess = taxAfterRebate * 0.04;
+    const totalTax = taxAfterRebate + cess;
 
-    // Update UI
-    totalTaxResult.textContent = formatCurrency(tax);
-    const averageTaxRate = taxableIncome > 0 ? (tax / taxableIncome) * 100 : 0;
+    totalTaxResult.textContent = formatCurrency(totalTax);
+    const averageTaxRate = taxableIncome > 0 ? (totalTax / taxableIncome) * 100 : 0;
     averageTaxRateResult.textContent = `${averageTaxRate.toFixed(2)} %`;
 
-    // Populate tax breakdown table
-    populateTaxBreakdownTable(taxBreakdown, rebate87A, cess, tax);
+    populateTaxBreakdownTable(taxBreakdown, rebate87A, cess, totalTax);
 }
 
 /**

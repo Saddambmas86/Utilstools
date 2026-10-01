@@ -343,16 +343,14 @@ include '../../includes/header.php';
     }
     
     async function convertWithServer(file, pageRange, outputFormat, swalInstance) {
-        // Bypass Hostinger's proxy drops (ERR_HTTP2_PROTOCOL_ERROR) entirely 
-        // by making the API call directly from the browser to ConvertAPI!
         const formData = new FormData();
-        formData.append('File', file);
+        formData.append('pdfFile', file);
         if (pageRange && pageRange !== '1-') {
             formData.append('PageRange', pageRange);
         }
         formData.append('StoreFile', 'true');
         
-        const apiUrl = 'https://v2.convertapi.com/convert/pdf/to/docx?Secret=WoZf9gPWyMeW4eTB701cdm4e818fuh4g';
+        const apiUrl = window.BASE_URL + 'api/convert-pdf-to-word.php';
         
         const response = await fetch(apiUrl, {
             method: 'POST',
@@ -366,8 +364,8 @@ include '../../includes/header.php';
             throw new Error(result.Message || 'Server conversion failed');
         }
         
-        if (result.Files && result.Files.length > 0) {
-            const fileUrl = result.Files[0].Url;
+        if (result.success && result.downloadUrl) {
+            const fileUrl = result.downloadUrl;
             
             // Download the converted file
             const dlResponse = await fetch(fileUrl);

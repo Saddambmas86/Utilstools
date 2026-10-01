@@ -79,7 +79,7 @@ include '../../includes/header.php';
             backdrop-filter: blur(6px);
             border-radius: 16px;
             padding: 12px 14px 14px;
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            border: 1px solid #718592;
             box-shadow: inset 0 1px 4px rgba(0,0,0,0.02);
             display: flex;
             flex-direction: column;
@@ -321,36 +321,6 @@ include '../../includes/header.php';
             color: #a55d2b;
         }
 
-        .stats-bar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 16px 30px;
-            padding: 8px 0 10px;
-            border-top: 1px solid rgba(180, 200, 210, 0.25);
-            border-bottom: 1px solid rgba(180, 200, 210, 0.25);
-            margin-bottom: 10px;
-            font-size: 12px;
-            color: #1f4c5a;
-            flex-shrink: 0;
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .stat-item i {
-            color: #3f8590;
-            width: 14px;
-            font-size: 12px;
-        }
-
-        .stat-value {
-            font-weight: 600;
-            color: #0b2f3a;
-        }
-
         .toolbar {
             display: flex;
             flex-wrap: wrap;
@@ -460,7 +430,6 @@ include '../../includes/header.php';
             body.app-shell > main.json-viewer-page { width: min(100% - 1rem, 88rem); padding-top: 0.75rem; }
             .json-viewer-page .main-container { padding: 9px; min-height: 0; }
             .header h1 { font-size: 20px; }
-            .stats-bar { gap: 10px; }
         }
 
         .json-viewer-page .header { margin-bottom: 6px; }
@@ -474,7 +443,6 @@ include '../../includes/header.php';
         .json-viewer-page .tree-output .node-children { padding-left: 16px; }
         .json-viewer-page .path-display { gap: 5px; min-height: 27px; margin-top: 4px; padding: 3px 7px; font-size: 10px; }
         .json-viewer-page .path-display .path-label { padding: 1px 6px; font-size: 9px; }
-        .json-viewer-page .stats-bar { gap: 6px 14px; margin-bottom: 6px; padding: 5px 0; font-size: 10px; }
         .json-viewer-page .toolbar { gap: 4px 6px; margin: 2px 0 6px; }
         .json-viewer-page .toolbar .btn { padding: 4px 8px; border-radius: 5px; font-size: 10px; }
         .json-viewer-page .status-bar { gap: 6px; padding-top: 5px; font-size: 10px; }
@@ -486,7 +454,6 @@ include '../../includes/header.php';
             .json-viewer-page .panel { min-height: 13rem; }
             .json-viewer-page #jsonInput,
             .json-viewer-page .tree-output { min-height: 10rem; }
-            .json-viewer-page .stats-bar { gap: 5px 9px; }
             .json-viewer-page .toolbar .btn { padding-inline: 6px; }
         }
     </style>
@@ -515,17 +482,7 @@ include '../../includes/header.php';
         </div>
     </div>
 
-    <div class="stats-bar" id="statsBar">
-        <div class="stat-item"><i class="fas fa-key"></i> Keys: <span class="stat-value" id="keysCount">0</span></div>
-        <div class="stat-item"><i class="fas fa-tag"></i> Values: <span class="stat-value" id="valuesCount">0</span></div>
-        <div class="stat-item"><i class="fas fa-layer-group"></i> Depth: <span class="stat-value" id="depthCount">0</span></div>
-        <div class="stat-item"><i class="fas fa-weight-hanging"></i> Size: <span class="stat-value" id="sizeDisplay">0 B</span></div>
-    </div>
-
     <div class="toolbar">
-        <button class="btn" id="viewBtn"><i class="fas fa-eye"></i> View</button>
-        <button class="btn" id="formatBtn"><i class="fas fa-magic"></i> Format</button>
-        <button class="btn" id="minifyBtn"><i class="fas fa-compress"></i> Minify</button>
         <button class="btn" id="validateBtn"><i class="fas fa-check-double"></i> Validate</button>
         <button class="btn" id="expandBtn"><i class="fas fa-expand"></i> Expand All</button>
         <button class="btn btn-purple" id="partialExpandBtn"><i class="fas fa-expand-arrows-alt"></i> Partly Expand</button>
@@ -546,10 +503,6 @@ include '../../includes/header.php';
         const inputArea = document.getElementById('jsonInput');
         const treeDiv = document.getElementById('treeOutput');
         const pathValue = document.getElementById('pathValue');
-        const keysSpan = document.getElementById('keysCount');
-        const valuesSpan = document.getElementById('valuesCount');
-        const depthSpan = document.getElementById('depthCount');
-        const sizeSpan = document.getElementById('sizeDisplay');
         const statusText = document.getElementById('statusText');
         const statusIcon = document.querySelector('#statusBar i');
 
@@ -559,41 +512,6 @@ include '../../includes/header.php';
             const div = document.createElement('div');
             div.textContent = str;
             return div.innerHTML;
-        }
-
-        function computeStats(obj, depth = 0) {
-            let keys = 0, values = 0, maxDepth = depth;
-            if (obj === null || typeof obj !== 'object') {
-                return { keys: 0, values: 1, depth: depth };
-            }
-            if (Array.isArray(obj)) {
-                values = obj.length;
-                for (let item of obj) {
-                    const sub = computeStats(item, depth + 1);
-                    keys += sub.keys;
-                    values += sub.values;
-                    maxDepth = Math.max(maxDepth, sub.depth);
-                }
-                return { keys, values, depth: maxDepth };
-            }
-            const entries = Object.entries(obj);
-            keys = entries.length;
-            values = entries.length;
-            for (let [k, v] of entries) {
-                const sub = computeStats(v, depth + 1);
-                keys += sub.keys;
-                values += sub.values;
-                maxDepth = Math.max(maxDepth, sub.depth);
-            }
-            return { keys, values, depth: maxDepth };
-        }
-
-        function getSize(obj) {
-            const str = JSON.stringify(obj);
-            const bytes = new Blob([str]).size;
-            if (bytes < 1024) return bytes + ' B';
-            if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
-            return (bytes / 1048576).toFixed(1) + ' MB';
         }
 
         // Render tree with level tracking
@@ -658,10 +576,6 @@ include '../../includes/header.php';
             if (!trimmed) {
                 treeDiv.innerHTML = `<div class="empty-tree"><i class="fas fa-tree"></i><span>Tree will appear here</span></div>`;
                 pathValue.textContent = 'Click any element to see its path';
-                keysSpan.textContent = '0';
-                valuesSpan.textContent = '0';
-                depthSpan.textContent = '0';
-                sizeSpan.textContent = '0 B';
                 statusText.textContent = '⏳ Waiting for input';
                 statusIcon.className = 'fas fa-circle-info';
                 statusIcon.style.color = '#8ba3ae';
@@ -675,12 +589,6 @@ include '../../includes/header.php';
                 treeDiv.innerHTML = treeHtml;
                 attachClickListeners();
 
-                const stats = computeStats(parsed);
-                keysSpan.textContent = stats.keys;
-                valuesSpan.textContent = stats.values;
-                depthSpan.textContent = stats.depth;
-                sizeSpan.textContent = getSize(parsed);
-
                 statusText.textContent = '✓ Valid JSON';
                 statusIcon.className = 'fas fa-circle-check';
                 statusIcon.style.color = '#1f8a6b';
@@ -692,10 +600,6 @@ include '../../includes/header.php';
                     <i class="fas fa-exclamation-triangle" style="margin-right:6px;"></i> 
                     <span>Invalid JSON · ${escapeHtml(e.message)}</span>
                 </div>`;
-                keysSpan.textContent = '—';
-                valuesSpan.textContent = '—';
-                depthSpan.textContent = '—';
-                sizeSpan.textContent = '—';
                 statusText.textContent = '✗ Invalid JSON';
                 statusIcon.className = 'fas fa-circle-exclamation';
                 statusIcon.style.color = '#bf6a5a';
@@ -807,29 +711,6 @@ include '../../includes/header.php';
         }
 
         // Button actions
-        document.getElementById('viewBtn').addEventListener('click', function() {
-            renderJSON(inputArea.value);
-        });
-        document.getElementById('formatBtn').addEventListener('click', function() {
-            const raw = inputArea.value.trim();
-            if (!raw) return;
-            try {
-                const parsed = JSON.parse(raw);
-                const pretty = JSON.stringify(parsed, null, 2);
-                inputArea.value = pretty;
-                renderJSON(pretty);
-            } catch (e) {}
-        });
-        document.getElementById('minifyBtn').addEventListener('click', function() {
-            const raw = inputArea.value.trim();
-            if (!raw) return;
-            try {
-                const parsed = JSON.parse(raw);
-                const min = JSON.stringify(parsed);
-                inputArea.value = min;
-                renderJSON(min);
-            } catch (e) {}
-        });
         document.getElementById('validateBtn').addEventListener('click', function() {
             const raw = inputArea.value.trim();
             if (!raw) { alert('Paste some JSON first.'); return; }
@@ -876,10 +757,6 @@ include '../../includes/header.php';
             inputArea.value = '';
             treeDiv.innerHTML = `<div class="empty-tree"><i class="fas fa-tree"></i><span>Tree will appear here</span></div>`;
             pathValue.textContent = 'Click any element to see its path';
-            keysSpan.textContent = '0';
-            valuesSpan.textContent = '0';
-            depthSpan.textContent = '0';
-            sizeSpan.textContent = '0 B';
             statusText.textContent = '⏳ Waiting for input';
             statusIcon.className = 'fas fa-circle-info';
             statusIcon.style.color = '#8ba3ae';

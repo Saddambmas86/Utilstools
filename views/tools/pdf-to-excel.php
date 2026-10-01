@@ -368,7 +368,7 @@ async function convertPDF() {
                 if (enableOCR) formData.append('Ocr', 'true');
 
                 // Use XLSX as the high-fidelity source regardless of outputFormat
-                const apiUrl = `https://v2.convertapi.com/convert/pdf/to/xlsx?Secret=WoZf9gPWyMeW4eTB701cdm4e818fuh4g`;
+                const apiUrl = `https://v2.convertapi.com/convert/pdf/to/xlsx?Secret=3AxumLNq9MGIgsdLYLAb1gNcvZirrSBX`;
                 const response = await fetch(apiUrl, { method: 'POST', body: formData });
                 const result = await response.json();
 

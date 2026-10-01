@@ -270,7 +270,7 @@ include '../../includes/header.php';
             fileExtension = 'docx'; // Fallback
         }
         
-        const apiUrl = `https://v2.convertapi.com/convert/${fileExtension}/to/pdf?Secret=WoZf9gPWyMeW4eTB701cdm4e818fuh4g`;
+        const apiUrl = `https://v2.convertapi.com/convert/${fileExtension}/to/pdf?Secret=3AxumLNq9MGIgsdLYLAb1gNcvZirrSBX`;
         
         const response = await fetch(apiUrl, {
             method: 'POST',

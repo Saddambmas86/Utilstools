@@ -5,17 +5,134 @@ include_once __DIR__ . '/config.php';
 if (!isset($brandIcons) && isset($GLOBALS['brandIcons']) && is_array($GLOBALS['brandIcons'])) {
     $brandIcons = $GLOBALS['brandIcons'];
 }
+
+$request_path_only = parse_url($_SERVER['REQUEST_URI'] ?? '/', PHP_URL_PATH) ?: '/';
+$guide_route_active = false;
+$guide_slug = '';
+$guide_page_title = '';
+$guide_page_url = '';
+$guide_file = '';
+$guide_is_article = false;
+$guide_breadcrumb_items = [];
+if (preg_match('~(?:^|/)guides(?:/([a-z0-9-]+))?/?$~i', $request_path_only, $guide_match)) {
+    $guide_slug = strtolower($guide_match[1] ?? 'index');
+    $guide_file = __DIR__ . '/../views/guides/' . $guide_slug . '.php';
+    if (is_file($guide_file)) {
+        $guide_route_active = true;
+        $guide_page_title = isset($page_title)
+            ? preg_replace('/\s+-\s+WordsCompare$/i', '', $page_title)
+            : ucwords(str_replace('-', ' ', $guide_slug));
+        $guide_page_url = rtrim($canonical_base_url, '/') . '/guides' . ($guide_slug === 'index' ? '' : '/' . $guide_slug);
+        $guide_is_article = !in_array($guide_slug, ['index', 'developers', 'devops', 'qa', 'api-testing'], true);
+        $guide_breadcrumb_items = [[
+            '@type' => 'ListItem',
+            'position' => 1,
+            'name' => 'Home',
+            'item' => rtrim($canonical_base_url, '/'),
+        ]];
+        if ($guide_slug === 'index') {
+            $guide_breadcrumb_items[] = [
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => $guide_page_title,
+                'item' => $guide_page_url,
+            ];
+        } else {
+            $guide_breadcrumb_items[] = [
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => 'Guides',
+                'item' => rtrim($canonical_base_url, '/') . '/guides',
+            ];
+            $guide_breadcrumb_items[] = [
+                '@type' => 'ListItem',
+                'position' => 3,
+                'name' => $guide_page_title,
+                'item' => $guide_page_url,
+            ];
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <?php
+    $seo_meta_title = trim((string) ($page_title ?? ''));
+    if ($seo_meta_title === '') {
+        $seo_meta_title = "$site_name - $default_title_suffix";
+        $seo_social_title = $site_name;
+    } else {
+        $seo_meta_title = preg_replace('/\s*(?:\||-|–|—)\s*' . preg_quote($site_name, '/') . '\s*$/iu', '', $seo_meta_title);
+        $title_suffix = ' | ' . $site_name;
+        if (mb_strlen($seo_meta_title . $title_suffix, 'UTF-8') > 60) {
+            $title_parts = preg_split('/\s+(?:-|–|—|:)\s+/u', $seo_meta_title, 2);
+            if (count($title_parts) > 1 && trim($title_parts[0]) !== '') {
+                $seo_meta_title = trim($title_parts[0]);
+            }
+            $max_title_length = 60 - mb_strlen($title_suffix, 'UTF-8');
+            if (mb_strlen($seo_meta_title, 'UTF-8') > $max_title_length) {
+                $seo_meta_title = mb_substr($seo_meta_title, 0, $max_title_length, 'UTF-8');
+                $last_space = mb_strrpos($seo_meta_title, ' ', 0, 'UTF-8');
+                if ($last_space !== false && $last_space > 0) {
+                    $seo_meta_title = mb_substr($seo_meta_title, 0, $last_space, 'UTF-8');
+                }
+            }
+        }
+        $seo_meta_title = trim($seo_meta_title) . $title_suffix;
+        $seo_social_title = $seo_meta_title;
+    }
+
+    $seo_meta_description = trim((string) ($page_description ?? ''));
+    if (mb_strlen($seo_meta_description, 'UTF-8') > 160) {
+        $seo_meta_description = mb_substr($seo_meta_description, 0, 157, 'UTF-8');
+        $last_space = mb_strrpos($seo_meta_description, ' ', 0, 'UTF-8');
+        if ($last_space !== false && $last_space > 0) {
+            $seo_meta_description = mb_substr($seo_meta_description, 0, $last_space, 'UTF-8');
+        }
+        $seo_meta_description = rtrim($seo_meta_description, " \t\n\r\0\x0B.,;:-") . '.';
+    }
+
+    $description_additions = [
+        ' Try it online.',
+        ' Use it online.',
+        ' Use the tool online.',
+        ' Get quick results online.',
+        ' Try it online for fast results.',
+        ' Use the free online tool for fast results.',
+        ' Use it online for a quick, simple workflow.',
+        ' Use this online tool for a clear, straightforward workflow and useful results.',
+    ];
+    while (mb_strlen($seo_meta_description, 'UTF-8') < 120) {
+        $current_length = mb_strlen($seo_meta_description, 'UTF-8');
+        $room = 160 - $current_length;
+        $needed = 120 - $current_length;
+        $addition = null;
+        foreach ($description_additions as $candidate) {
+            $candidate_length = mb_strlen($candidate, 'UTF-8');
+            if ($candidate_length >= $needed && $candidate_length <= $room) {
+                $addition = $candidate;
+                break;
+            }
+        }
+        if ($addition === null) {
+            foreach ($description_additions as $candidate) {
+                if (mb_strlen($candidate, 'UTF-8') <= $room) {
+                    $addition = $candidate;
+                }
+            }
+        }
+        if ($addition === null) {
+            break;
+        }
+        $seo_meta_description .= $addition;
+    }
+    ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= htmlspecialchars(empty($page_title) ? "$site_name - $default_title_suffix" : "$page_title | $site_name") ?>
-    </title>
-    <meta name="description" content="<?php echo $page_description; ?>">
+    <title><?= htmlspecialchars($seo_meta_title, ENT_QUOTES, 'UTF-8') ?></title>
+    <meta name="description" content="<?php echo htmlspecialchars($seo_meta_description, ENT_QUOTES, 'UTF-8'); ?>">
     <meta name="keywords" content="<?php echo $page_keywords; ?>">
     <?php
     // Canonical URL: prefer explicit $canonical_url, else build from canonical_base_url (forces https when configured)
@@ -38,14 +155,14 @@ if (!isset($brandIcons) && isset($GLOBALS['brandIcons']) && is_array($GLOBALS['b
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="<?= htmlspecialchars($site_name) ?>">
-    <meta property="og:title" content="<?= htmlspecialchars(empty($page_title) ? $site_name : $page_title) ?>">
-    <meta property="og:description" content="<?= htmlspecialchars(empty($page_description) ? '' : $page_description) ?>">
+    <meta property="og:title" content="<?= htmlspecialchars($seo_social_title, ENT_QUOTES, 'UTF-8') ?>">
+    <meta property="og:description" content="<?= htmlspecialchars($seo_meta_description, ENT_QUOTES, 'UTF-8') ?>">
     <meta property="og:url" content="<?= htmlspecialchars(isset($canonical_url) && !empty($canonical_url) ? $canonical_url : (isset(
 $canonical_to_print) ? $canonical_to_print : ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]"))) ?>">
     <meta property="og:image" content="<?= isset($og_image) ? $og_image : $base_url . 'assets/img/og-image.png' ?>">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="<?= htmlspecialchars(empty($page_title) ? $site_name : $page_title) ?>">
-    <meta name="twitter:description" content="<?= htmlspecialchars(empty($page_description) ? '' : $page_description) ?>">
+    <meta name="twitter:title" content="<?= htmlspecialchars($seo_social_title, ENT_QUOTES, 'UTF-8') ?>">
+    <meta name="twitter:description" content="<?= htmlspecialchars($seo_meta_description, ENT_QUOTES, 'UTF-8') ?>">
     <meta name="twitter:image" content="<?= isset($og_image) ? $og_image : $base_url . 'assets/img/og-image.png' ?>">
     <meta name='theme-color' content='#FF2D55' />
 
@@ -146,38 +263,44 @@ $canonical_to_print) ? $canonical_to_print : ((isset($_SERVER['HTTPS']) && $_SER
         "@type": "WebSite",
         "url": "<?php echo rtrim($canonical_base_url, '/'); ?>",
         "name": "<?php echo htmlspecialchars($site_name); ?>",
-        "potentialAction": {
-            "@type": "SearchAction",
-            "target": "<?php echo rtrim($canonical_base_url, '/'); ?>/?s={search_term_string}",
-            "query-input": "required name=search_term_string"
-        }
+        "inLanguage": "en"
     }
     </script>
 
     <?php
-    // If this request maps to a content guide in views/content, emit Article schema
-    $req_path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-    $maybe_slug = trim($req_path, '/');
-    $content_file = __DIR__ . '/../views/content/' . $maybe_slug . '.php';
-    if ($maybe_slug && file_exists($content_file)) {
-        $article_url = rtrim($canonical_base_url, '/') . '/' . $maybe_slug;
-        $published = date('c', file_exists($content_file) ? filemtime($content_file) : time());
-        ?>
+    if ($guide_is_article): ?>
         <script type="application/ld+json">
         <?php echo json_encode([
             "@context" => "https://schema.org",
             "@type" => "Article",
-            "headline" => isset($page_title) ? $page_title : ucwords(str_replace('-', ' ', $maybe_slug)),
-            "description" => isset($page_description) ? $page_description : '',
-            "mainEntityOfPage" => ["@type" => "WebPage", "@id" => $article_url],
-            "url" => $article_url,
-            "datePublished" => $published,
-            "author" => ["@type" => "Organization", "name" => "{$site_name}" ]
-        ]); ?>
+            "headline" => strip_tags($page_title ?? $guide_page_title),
+            "description" => strip_tags($page_description ?? ''),
+            "mainEntityOfPage" => ["@type" => "WebPage", "@id" => $guide_page_url],
+            "url" => $guide_page_url,
+            "dateModified" => date(DATE_ATOM, filemtime($guide_file)),
+            "author" => ["@type" => "Organization", "name" => $site_name],
+            "publisher" => [
+                "@type" => "Organization",
+                "name" => $site_name,
+                "logo" => [
+                    "@type" => "ImageObject",
+                    "url" => rtrim($canonical_base_url, '/') . "/assets/img/wordscompare-mark.svg",
+                ],
+            ],
+            "inLanguage" => "en",
+        ], JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>
         </script>
-        <?php
-    }
-    ?>
+    <?php endif; ?>
+
+    <?php if ($guide_route_active): ?>
+        <script type="application/ld+json">
+        <?php echo json_encode([
+            "@context" => "https://schema.org",
+            "@type" => "BreadcrumbList",
+            "itemListElement" => $guide_breadcrumb_items,
+        ], JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>
+        </script>
+    <?php endif; ?>
 
     <!-- Essential Libraries (deferred to improve initial render) -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
@@ -261,7 +384,7 @@ $canonical_to_print) ? $canonical_to_print : ((isset($_SERVER['HTTPS']) && $_SER
                     </button>
                 </div>
                 <a class="nav-link me-2" href="<?php echo $base_url; ?>">
-                    <i class="fas fa-home"></i> Home
+                    <i class="fas fa-home me-1"></i> Home
                 </a>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -299,6 +422,22 @@ $canonical_to_print) ? $canonical_to_print : ((isset($_SERVER['HTTPS']) && $_SER
             </div>
         </div>
     </nav>
+
+    <?php if ($guide_route_active): ?>
+        <div class="container mt-3">
+            <nav aria-label="Breadcrumb" class="mb-3">
+                <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="<?php echo htmlspecialchars($base_url, ENT_QUOTES, 'UTF-8'); ?>" class="text-decoration-none">Home</a></li>
+                    <?php if ($guide_slug === 'index'): ?>
+                        <li class="breadcrumb-item active" aria-current="page"><?php echo htmlspecialchars($guide_page_title, ENT_QUOTES, 'UTF-8'); ?></li>
+                    <?php else: ?>
+                        <li class="breadcrumb-item"><a href="<?php echo htmlspecialchars(rtrim($base_url, '/') . '/guides', ENT_QUOTES, 'UTF-8'); ?>" class="text-decoration-none">Guides</a></li>
+                        <li class="breadcrumb-item active" aria-current="page"><?php echo htmlspecialchars($guide_page_title, ENT_QUOTES, 'UTF-8'); ?></li>
+                    <?php endif; ?>
+                </ol>
+            </nav>
+        </div>
+    <?php endif; ?>
 
     <!-- Search UI loader: load search widget on-demand to reduce initial JS payload -->
     <script>window.BASE_URL = '<?php echo $base_url; ?>';

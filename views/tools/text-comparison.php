@@ -56,7 +56,7 @@ $seo_cluster = [
         'keywords' => 'compare documents, document diff, legal contract comparison, business document tool'
     ],
     'text-comparison' => [
-        'title' => 'Compare Two Text Files Online – Free Text Comparison Tool',
+        'title' => 'Text Comparison Tool – Compare Two Texts',
         'description' => 'Free text comparison tool online. Compare two texts side by side and highlight differences, additions, and deletions. Perfect for proofreading and code review.',
         'keywords' => 'text comparison, text utilities, word counter, case converter, text tool, online text editor, formatting, wordscompare'
     ]

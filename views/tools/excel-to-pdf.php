@@ -468,7 +468,7 @@ async function convertExcelToPdf() {
             formData.append('MarginRight', '30');
             formData.append('MarginBottom', '30');
 
-            const apiUrl = `https://v2.convertapi.com/convert/${fileExtension}/to/pdf?Secret=WoZf9gPWyMeW4eTB701cdm4e818fuh4g`;
+            const apiUrl = `https://v2.convertapi.com/convert/${fileExtension}/to/pdf?Secret=3AxumLNq9MGIgsdLYLAb1gNcvZirrSBX`;
             const response = await fetch(apiUrl, { method: 'POST', body: formData });
             const result = await response.json();
 

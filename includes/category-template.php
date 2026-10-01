@@ -92,6 +92,26 @@ function getToolIcon(string $slug): string {
             <li class="breadcrumb-item active" aria-current="page"><?php echo htmlspecialchars($category['title']); ?></li>
         </ol>
     </nav>
+    <script type="application/ld+json">
+    <?php echo json_encode([
+        '@context' => 'https://schema.org',
+        '@type' => 'BreadcrumbList',
+        'itemListElement' => [
+            [
+                '@type' => 'ListItem',
+                'position' => 1,
+                'name' => 'Home',
+                'item' => rtrim($canonical_base_url, '/'),
+            ],
+            [
+                '@type' => 'ListItem',
+                'position' => 2,
+                'name' => $category['title'],
+                'item' => rtrim($canonical_base_url, '/') . '/' . $category['slug'],
+            ],
+        ],
+    ], JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT); ?>
+    </script>
 
     <header class="mb-5">
         <h1 class="display-5 fw-bold mb-3"><?php echo htmlspecialchars($category['title']); ?></h1>

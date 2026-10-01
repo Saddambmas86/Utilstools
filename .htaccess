@@ -32,11 +32,18 @@
 
 RewriteEngine On
 
-# Force HTTPS for non-localhosts (preserve host)
-# Skip forcing HTTPS when developing on localhost or 127.0.0.1
-RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)$ [NC]
-RewriteCond %{HTTPS} !=on
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Set baseline security headers
+<IfModule mod_headers.c>
+	Header always set X-Content-Type-Options "nosniff"
+	Header always set Referrer-Policy "strict-origin-when-cross-origin"
+	Header always set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
+# Normalize external requests to the canonical HTTPS host in one redirect
+RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:\d+)?$ [NC]
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} !^www\.wordscompare\.com$ [NC]
+RewriteRule ^ https://www.wordscompare.com%{REQUEST_URI} [R=301,L]
 
 # Custom 404 handler
 ErrorDocument 404 /404.php
@@ -86,12 +93,6 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_URI} !^/views/tools/ [NC]
 RewriteRule ^([^/]+)/?$ $1.php [L]
-
-# Redirect non-www → www (skip for localhost and 127.0.0.1)
-RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)$ [NC]
-RewriteCond %{HTTP_HOST} !^www\. [NC]
-RewriteRule ^ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
 
 RewriteEngine On
 # Redirect index.php / index.html to root

@@ -10,7 +10,7 @@
  * 4. Paste it securely into the $apiSecret variable below.
  */
 
-$apiSecret = "WoZf9gPWyMeW4eTB701cdm4e818fuh4g"; // <--- PASTE YOUR API SECRET HERE
+$apiSecret = getenv('CONVERTAPI_SECRET') ?: '3AxumLNq9MGIgsdLYLAb1gNcvZirrSBX';
 
 header('Content-Type: application/json');
 

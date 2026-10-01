@@ -196,8 +196,8 @@ endif;
         [
             "@type" => "ListItem",
             "position" => 2,
-            "name" => "Tools",
-            "item" => rtrim($base_url, '/') . '/developer-tools'
+            "name" => $parent_category['title'],
+            "item" => rtrim($canonical_base_url, '/') . '/' . $parent_category['slug']
         ],
         [
             "@type" => "ListItem",
